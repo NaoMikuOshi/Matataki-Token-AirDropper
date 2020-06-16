@@ -8,7 +8,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { Button, Footer, Content } from 'react-bulma-components';
+import { Button, Footer, Content, Navbar } from 'react-bulma-components';
 
 import Claim from "./pages/Claim";
 
@@ -16,24 +16,38 @@ export default function App() {
   return (
     <Router>
       <div id="wrapper">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
-          </li>
-          <li>
-            <Link to="/topics">Topics</Link>
-          </li>
-        </ul>
-
+      <Navbar
+        fixed="top"
+        active={false}
+        transparent={false}
+      >
+        <Navbar.Brand>
+          <Navbar.Item renderAs="a" href="/">
+            {/* <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" /> */}
+            Matataki AirDropper
+          </Navbar.Item>
+          <Navbar.Burger />
+        </Navbar.Brand>
+        <Navbar.Menu >
+          <Navbar.Container>
+            <Navbar.Item href="/send">
+              Send
+            </Navbar.Item>
+            <Navbar.Item href="/claim">
+              Redeem
+            </Navbar.Item>
+          </Navbar.Container>
+          <Navbar.Container position="end">
+            <Navbar.Item href="#">
+                  Sign In
+            </Navbar.Item>
+          </Navbar.Container>
+        </Navbar.Menu>
+      </Navbar>
+      
         <Switch>
           <Route path="/about">
             <About />
-          </Route>
-          <Route path="/topics">
-            <Topics />
           </Route>
           <Route path="/claim/:symbol-:hash" children={<Claim />} />
           <Route path="/">
