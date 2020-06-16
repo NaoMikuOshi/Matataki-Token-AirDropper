@@ -1,4 +1,5 @@
 import React from "react";
+import 'react-bulma-components/dist/react-bulma-components.min.css';
 import {
   BrowserRouter as Router,
   Switch,
@@ -7,6 +8,7 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
+import { Button } from 'react-bulma-components';
 
 export default function App() {
   return (
@@ -41,7 +43,7 @@ export default function App() {
 }
 
 function Home() {
-  return <h2>Home</h2>;
+  return <h2>Home<Button color="primary">My Bulma button</Button></h2>;
 }
 
 function About() {
