@@ -8,9 +8,11 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { Button, Footer, Content, Navbar } from 'react-bulma-components';
+import { Button, Footer, Content, Navbar, Hero, Container, Heading } from 'react-bulma-components';
 
 import Claim from "./pages/Claim";
+import Send from "./pages/Send";
+import Login from "./pages/Login";
 
 export default function App() {
   return (
@@ -49,6 +51,8 @@ export default function App() {
           <Route path="/about">
             <About />
           </Route>
+          <Route path="/send" children={<Send />} />
+          <Route path="/login" children={<Login />} />
           <Route path="/claim/:symbol-:hash" children={<Claim />} />
           <Route path="/">
             <Home />
@@ -71,7 +75,27 @@ export default function App() {
 }
 
 function Home() {
-  return <h2>Home<Button color="primary">My Bulma button</Button></h2>;
+  return <section class="section">
+  <Container>
+    <Hero color="primary" gradient>
+      <Hero.Body>
+              <Container>
+                <Heading>
+                  Matataki Token AirDropper
+                </Heading>
+                <Heading subtitle size={3}>
+                  A simple app to airdrop your <strong>Matataki Token</strong>
+                </Heading>
+                <Heading subtitle size={4}>
+                  Share to anywhere with the magical link.
+                </Heading>
+                <Button color="primary" rounded={true} style={{margin: "5px"}}>Send</Button>
+                <Button color="light" rounded={true} style={{margin: "5px"}}>Redeem</Button>
+              </Container>
+      </Hero.Body>
+    </Hero>
+  </Container>
+</section>;
 }
 
 function About() {
