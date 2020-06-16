@@ -8,12 +8,14 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { Button } from 'react-bulma-components';
+import { Button, Footer, Content } from 'react-bulma-components';
+
+import Claim from "./pages/Claim";
 
 export default function App() {
   return (
     <Router>
-      <div>
+      <div id="wrapper">
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -33,11 +35,23 @@ export default function App() {
           <Route path="/topics">
             <Topics />
           </Route>
+          <Route path="/claim/:symbol-:hash" children={<Claim />} />
           <Route path="/">
             <Home />
           </Route>
         </Switch>
       </div>
+      <Footer style={{padding: "1.5rem"}}>
+        <Content className="has-text-centered">
+          <p>
+            Matataki Token AirDropper ©️ Nao KM All Right Reserved.
+            <br/>
+            This is a 3rd party apps develop for Matataki.
+            <br/>
+            I have open sourced the code right here: <a href={process.env.REACT_APP_FE_REPO} target="_blank" rel="noopener">GitHub</a>
+          </p>
+        </Content>
+      </Footer>
     </Router>
   );
 }
