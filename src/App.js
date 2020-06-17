@@ -13,6 +13,7 @@ import { Button, Footer, Content, Navbar, Hero, Container, Heading } from 'react
 import Claim from "./pages/Claim";
 import Send from "./pages/Send";
 import Login from "./pages/Login";
+import ClaimWithCashtag from "./pages/ClaimWithCashtag";
 
 export default function App() {
   return (
@@ -40,7 +41,7 @@ export default function App() {
             </Navbar.Item>
           </Navbar.Container>
           <Navbar.Container position="end">
-            <Navbar.Item href="#">
+            <Navbar.Item href="/login">
                   Sign In
             </Navbar.Item>
           </Navbar.Container>
@@ -53,7 +54,8 @@ export default function App() {
           </Route>
           <Route path="/send" children={<Send />} />
           <Route path="/login" children={<Login />} />
-          <Route path="/claim/:symbol-:hash" children={<Claim />} />
+          <Route path="/claim/$:cashtag" children={<Claim />} />
+          <Route path="/claim/" children={<ClaimWithCashtag />} />
           <Route path="/">
             <Home />
           </Route>
