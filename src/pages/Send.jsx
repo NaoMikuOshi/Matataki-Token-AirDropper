@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Container, Button } from "react-bulma-components";
+import { Form, Container, Button, Notification } from "react-bulma-components";
 import { Formik } from 'formik';
 const { Field, Control, Label, Input, Radio } = Form
 
@@ -44,7 +44,10 @@ export default function Send() {
                 <Control>
                 <Input placeholder="Title of this Token Airdrop..." onChange={handleChange}
                     onBlur={handleBlur} value={values.title} name="title" />
-                <p>{errors.title && touched.title && errors.title}</p>
+                      {
+                        errors.title && touched.title 
+                        && <Notification color="danger">{errors.title}</Notification>
+                      }
                 </Control>
           </Field>
           <Field>
@@ -52,7 +55,9 @@ export default function Send() {
                 <Control>
                 <Input placeholder="Quantity" onChange={handleChange}
                     onBlur={handleBlur} value={values.quantity} name="quantity" />
-                <p>{errors.quantity && touched.quantity && errors.quantity}</p>
+                {
+                  errors.quantity && touched.quantity && <Notification color="danger">{errors.quantity}</Notification>
+                }
                 </Control>
           </Field>
           <Field>
@@ -60,7 +65,9 @@ export default function Send() {
                 <Control>
                 <Input placeholder="Total Amount" onChange={handleChange}
                     onBlur={handleBlur} value={values.total} name="total" />
-                    {errors.total && touched.total && errors.total}
+                    {
+                      errors.total && touched.total && <Notification color="danger">{errors.total}</Notification>
+                    }
                 </Control>
           </Field>
           <Field>
