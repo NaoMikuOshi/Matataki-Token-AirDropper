@@ -91,8 +91,8 @@ function Home() {
                 <Heading subtitle size={4}>
                   Share to anywhere with the magical link.
                 </Heading>
-                <Button color="primary" rounded={true} style={{margin: "5px"}}>Send</Button>
-                <Button color="light" rounded={true} style={{margin: "5px"}}>Redeem</Button>
+                <Link to="/send"><Button color="primary" rounded={true} style={{margin: "5px"}}>Send</Button></Link>
+                <Link to="/claim"><Button color="light" rounded={true} style={{margin: "5px"}}>Redeem</Button></Link>
               </Container>
       </Hero.Body>
     </Hero>
