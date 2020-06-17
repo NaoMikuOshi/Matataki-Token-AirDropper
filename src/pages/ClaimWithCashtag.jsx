@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Form, Container, Button, Notification, Icon } from "react-bulma-components";
 const { Field, Control, Label, Input, Radio } = Form
@@ -6,7 +6,11 @@ const { Field, Control, Label, Input, Radio } = Form
 export default function ClaimWithCashtag() {
     const history = useHistory();
     const [ cashtag, setCashTag ] = useState('');
-
+    useEffect(() => {
+        if (cashtag.slice(0, 1) === '$') {
+            setCashTag(cashtag.slice(1))
+        }
+    }, [cashtag])
     function goToClaimPage(e) {
         e.preventDefault();
         history.push(`/claim/$${cashtag}`);
