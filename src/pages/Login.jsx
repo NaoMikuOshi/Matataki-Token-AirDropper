@@ -3,7 +3,7 @@ import { useStore } from "../store";
 import { setCookie } from "../utils/cookie";
 import { Formik } from "formik";
 import { Container, Notification, Form, Button } from "react-bulma-components";
-import axios from "../api";
+import { loginWithEmail } from "../api/user";
 
 const { Field, Control, Label, Input } = Form;
 
@@ -12,9 +12,6 @@ export default function Login() {
   const [errorMsg, setError] = useState({
     code: 0,
   });
-  function loginIn({ email, password }) {
-    return axios.post("/login/account", { username: email, password });
-  }
   return (
     <Container className="send">
       <Formik
@@ -35,7 +32,7 @@ export default function Login() {
           setError({ code: 0 });
           // do something with values
           console.log(values);
-          loginIn(values).then((result) => {
+          loginWithEmail(values.email, values.password).then((result) => {
             console.log(result);
             if (result.code !== 0) {
               setError(result);
@@ -105,6 +102,7 @@ export default function Login() {
                   </Notification>
                 )}
                 <Button
+                  type="submit"
                   color="primary"
                   className="is-fullwidth"
                   disabled={isSubmitting}
