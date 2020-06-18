@@ -4,6 +4,7 @@ import effects from "./effects";
 // Declare your store's initial state.
 const initialState = {
   accessToken: "",
+  atData: {},
   userInfo: {},
 };
 

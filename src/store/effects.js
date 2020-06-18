@@ -1,10 +1,13 @@
 import { withReduxDevtools, withLogger } from "undux";
 import { disassemble } from "../utils";
 import { getUserProfile } from "../api/user";
+import { setCookie } from "../utils/cookie";
 
 let effects = (store) => {
   store.on("accessToken").subscribe((accessToken) => {
+    setCookie("ACCESS_TOKEN", accessToken, { expires: 1, path: "/" });
     const user = disassemble(accessToken);
+    store.set("atData")(user);
     if (!user.id) {
       return;
     }

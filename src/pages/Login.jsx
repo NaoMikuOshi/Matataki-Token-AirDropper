@@ -38,7 +38,6 @@ export default function Login() {
               setError(result);
             } else {
               store.set("accessToken")(result.data);
-              setCookie("ACCESS_TOKEN", result.data, { expires: 1, path: "/" });
             }
             setSubmitting(false);
           });
