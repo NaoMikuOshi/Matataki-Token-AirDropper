@@ -25,6 +25,7 @@ import ClaimWithCashtag from "./pages/ClaimWithCashtag";
 import { disassemble } from "./utils";
 import { getCookie } from "./utils/cookie";
 import { getUserProfile } from "./api/user";
+import Navigation from "./components/Navigation";
 
 export default function App() {
   const store = useStore();
@@ -35,6 +36,7 @@ export default function App() {
     if (!user.id) {
       return;
     }
+    // @todo: react-hooks/exhaustive-deps
     getUserProfile(user.id).then((profile) => {
       store.set("userInfo")(profile.data);
     });
@@ -44,25 +46,7 @@ export default function App() {
   return (
     <Router>
       <div id="wrapper">
-        <Navbar fixed="top" active={false} transparent={false}>
-          <Navbar.Brand>
-            <Navbar.Item renderAs="a" href="/">
-              {/* <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" /> */}
-              Matataki AirDropper
-            </Navbar.Item>
-            <Navbar.Burger />
-          </Navbar.Brand>
-          <Navbar.Menu>
-            <Navbar.Container>
-              <Navbar.Item href="/send">Send</Navbar.Item>
-              <Navbar.Item href="/claim">Redeem</Navbar.Item>
-            </Navbar.Container>
-            <Navbar.Container position="end">
-              <Navbar.Item href="/login">Sign In</Navbar.Item>
-            </Navbar.Container>
-          </Navbar.Menu>
-        </Navbar>
-
+        <Navigation />
         <Switch>
           {/* <Route path="/about">
             <About />
