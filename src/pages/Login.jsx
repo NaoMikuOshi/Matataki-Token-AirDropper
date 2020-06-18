@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from 'formik';
 import {  Container, Notification, Form, Button } from 'react-bulma-components';
+import axios from "../api";
 
 const { Field, Control, Label, Input } = Form
 
 
-export default function Send() {
+export default function Login() {
+  const [errorMsg, setError] = useState({
+    code: 0,
+  })
+    function loginIn({ email, password }) {
+      return axios.post('/login/account', { username: email, password });
+    }
     return <Container className="send">
     <Formik
       initialValues={{ email: '', password: '' }}
@@ -21,10 +28,17 @@ export default function Send() {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+        // clear error state
+        setError({ code: 0 })
+          // do something with values
+          console.log(values)
+          loginIn(values).then((result) => {
+            console.log(result);
+            if (result.code !== 0) {
+              setError(result);
+            }
+            setSubmitting(false);
+          })
       }}
     >
       {({
@@ -37,11 +51,11 @@ export default function Send() {
         isSubmitting,
         /* and other goodies */
       }) => (
-        <div class="panel is-primary" style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <p class="panel-heading">
+        <div className="panel is-primary" style={{ maxWidth: "600px", margin: "0 auto" }}>
+          <p className="panel-heading">
             Login with Matataki Account
           </p>
-          <div class="panel-block">
+          <div className="panel-block">
             <form onSubmit={handleSubmit} style={{ width: "100%" }}>
               <Field>
                   <Label>Email</Label>
@@ -66,6 +80,9 @@ export default function Send() {
                   </Control>
               </Field>
               
+              {
+                errorMsg.code !== 0 && <Notification color="danger">Error code: {errorMsg.code}, message: {errorMsg.message}</Notification>
+              }
               <Button color="primary" className="is-fullwidth" disabled={isSubmitting}>Login</Button>
             </form>
           </div>

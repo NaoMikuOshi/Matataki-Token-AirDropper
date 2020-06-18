@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { removeCookie, clearAllCookie, getCookie } from '@/utils/cookie'
+import { removeCookie, clearAllCookie, getCookie } from '../utils/cookie'
 
 const client = axios.create({
     baseURL: process.env.REACT_APP_MATATAKI_API,
@@ -58,7 +58,7 @@ client.interceptors.response.use(
 
       // 超时处理
       if (error.message.includes('timeout')) {
-        Message.closeAll()
+        // Message.closeAll()
         alert('请求超时')
       }
       if (error.message.includes('Network Error')) {
