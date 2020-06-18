@@ -35,6 +35,7 @@ export default function App() {
     if (!accessToken) {
       return;
     }
+    /* eslint-disable react-hooks/exhaustive-deps */
     store.set("accessToken")(accessToken);
     // effect of no dependencies, so this only run this function at the component mounted
   }, []);
@@ -82,7 +83,7 @@ export default function App() {
 
 function Home() {
   return (
-    <section className="section">
+    <section class="section">
       <Container>
         <Hero color="primary" gradient>
           <Hero.Body>
