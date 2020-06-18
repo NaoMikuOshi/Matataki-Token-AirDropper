@@ -18,6 +18,7 @@ function UserStatusNavItems() {
   const userInfo = store.get("userInfo");
   function logout() {
     removeCookie("ACCESS_TOKEN");
+    store.set("userInfo")({});
   }
   if (userInfo.username) {
     return [
