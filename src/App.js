@@ -31,16 +31,11 @@ export default function App() {
   const store = useStore();
   // Init app, try to get access token
   useEffect(() => {
-    const user = disassemble(getCookie("ACCESS_TOKEN"));
-    console.log(user);
-    if (!user.id) {
+    const accessToken = getCookie("ACCESS_TOKEN");
+    if (!accessToken) {
       return;
     }
-    // @todo: react-hooks/exhaustive-deps
-    getUserProfile(user.id).then((profile) => {
-      store.set("userInfo")(profile.data);
-    });
-
+    store.set("accessToken")(accessToken);
     // effect of no dependencies, so this only run this function at the component mounted
   }, []);
   return (
