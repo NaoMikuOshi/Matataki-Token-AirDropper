@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
 import {
   BrowserRouter as Router,
@@ -17,13 +17,30 @@ import {
   Container,
   Heading,
 } from "react-bulma-components";
-
+import { useStore } from "./store";
 import Claim from "./pages/Claim";
 import Send from "./pages/Send";
 import Login from "./pages/Login";
 import ClaimWithCashtag from "./pages/ClaimWithCashtag";
+import { disassemble } from "./utils";
+import { getCookie } from "./utils/cookie";
+import { getUserProfile } from "./api/user";
 
 export default function App() {
+  const store = useStore();
+  // Init app, try to get access token
+  useEffect(() => {
+    const user = disassemble(getCookie("ACCESS_TOKEN"));
+    console.log(user);
+    if (!user.id) {
+      return;
+    }
+    getUserProfile(user.id).then((profile) => {
+      store.set("userInfo")(profile.data);
+    });
+
+    // effect of no dependencies, so this only run this function at the component mounted
+  }, []);
   return (
     <Router>
       <div id="wrapper">

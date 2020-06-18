@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useStore } from "../store";
+import { setCookie } from "../utils/cookie";
 import { Formik } from "formik";
 import { Container, Notification, Form, Button } from "react-bulma-components";
 import axios from "../api";
@@ -6,6 +8,7 @@ import axios from "../api";
 const { Field, Control, Label, Input } = Form;
 
 export default function Login() {
+  const store = useStore();
   const [errorMsg, setError] = useState({
     code: 0,
   });
@@ -36,6 +39,9 @@ export default function Login() {
             console.log(result);
             if (result.code !== 0) {
               setError(result);
+            } else {
+              store.set("accessToken")(result.data);
+              setCookie("ACCESS_TOKEN", result.data, { expires: 1, path: "/" });
             }
             setSubmitting(false);
           });
