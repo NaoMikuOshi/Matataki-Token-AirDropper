@@ -24,9 +24,9 @@ function UserStatusNavItems() {
     return [
       <Navbar.Item>
         {userInfo.avatar && (
-          <figure class="image is-32x32">
+          <figure className="image is-32x32">
             <img
-              class="is-rounded"
+              className="is-rounded"
               alt="User avatar"
               src={getAvatarUrl(userInfo.avatar)}
             />

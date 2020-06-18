@@ -27,7 +27,7 @@ export default function ClaimWithCashtag() {
       className="cashtag has-text-centered panel is-primary"
       style={{ maxWidth: "650px", margin: "10px auto" }}
     >
-      <p class="panel-heading">Claim airdrop with $cashtag</p>
+      <p className="panel-heading">Claim airdrop with $cashtag</p>
       <div style={{ padding: "10px" }}>
         <Field>
           <Control iconLeft>
@@ -38,8 +38,8 @@ export default function ClaimWithCashtag() {
               value={cashtag}
               placeholder="Enter the cashtag to claim your airdrop..."
             />
-            <span class="icon is-small is-left">
-              <i class="fas fa-dollar-sign"></i>
+            <span className="icon is-small is-left">
+              <i className="fas fa-dollar-sign"></i>
             </span>
           </Control>
         </Field>

@@ -82,7 +82,7 @@ export default function App() {
 
 function Home() {
   return (
-    <section class="section">
+    <section className="section">
       <Container>
         <Hero color="primary" gradient>
           <Hero.Body>

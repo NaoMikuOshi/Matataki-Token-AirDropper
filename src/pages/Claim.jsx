@@ -86,7 +86,7 @@ export default function Claim() {
       className="has-text-centered panel is-primary"
       style={{ maxWidth: "650px", margin: "10px auto" }}
     >
-      <p class="panel-heading">
+      <p className="panel-heading">
         Air Drop of Total {airdropDetail.sum} {airdropDetail.symbol}
       </p>
       <Heading subtitle renderAs="p">
@@ -94,9 +94,9 @@ export default function Claim() {
       </Heading>
       <div className="user-card">
         <div className="avatar is-flex is-horizontal-center">
-          <figure class="image is-128x128 is-flex is-horizontal-center">
+          <figure className="image is-128x128 is-flex is-horizontal-center">
             <img
-              class="is-rounded"
+              className="is-rounded"
               alt="User avatar"
               src={airdropDetail.sender.avatar}
             />
@@ -106,11 +106,11 @@ export default function Claim() {
       </div>
       <Button className="is-rounded is-primary">{claimButtonText}</Button>
       <div
-        class="panel is-info"
+        className="panel is-info"
         style={{ maxWidth: "600px", margin: "10px auto" }}
       >
-        <p class="panel-heading">Records of Claim</p>
-        <p class="panel-block">
+        <p className="panel-heading">Records of Claim</p>
+        <p className="panel-block">
           Remain:{" "}
           <code>
             {airdropDetail.quantity.remain} / {airdropDetail.quantity.total}
@@ -118,9 +118,13 @@ export default function Claim() {
         </p>
         {airdropDetail.history.map((record) => {
           return (
-            <div class="panel-block is-active">
-              <figure class="image is-32x32">
-                <img class="is-rounded" alt="User avatar" src={record.avatar} />
+            <div className="panel-block is-active">
+              <figure className="image is-32x32">
+                <img
+                  className="is-rounded"
+                  alt="User avatar"
+                  src={record.avatar}
+                />
               </figure>
               {record.nickname} Got {record.amount / 10000}{" "}
               {airdropDetail.symbol}
