@@ -27,8 +27,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: yarn build
     - name: Deploy Surge
-        uses: yg/deploy-surge@v1.0.0
-        with:
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-          BUILD_DIRECTORY: ${{ secrets.BUILD_DIRECTORY }}
+      uses: yg/deploy-surge@v1.0.0
+      with:
+        SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
+        DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+        BUILD_DIRECTORY: ${{ secrets.BUILD_DIRECTORY }}
