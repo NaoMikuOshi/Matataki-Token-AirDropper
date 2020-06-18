@@ -1,5 +1,5 @@
 import axios from "axios";
-import { removeCookie, clearAllCookie, getCookie } from "../utils/cookie";
+import { getCookie } from "../utils/cookie";
 
 const client = axios.create({
   baseURL: process.env.REACT_APP_MATATAKI_API,

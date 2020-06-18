@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useStore } from "../store";
-import { setCookie } from "../utils/cookie";
 import { Formik } from "formik";
 import { Container, Notification, Form, Button } from "react-bulma-components";
 import { loginWithEmail } from "../api/user";

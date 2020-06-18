@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./claim.scss";
 import { useParams } from "react-router-dom";
-import {
-  Container,
-  Heading,
-  Button,
-  Notification,
-} from "react-bulma-components";
+import { Container, Heading, Button } from "react-bulma-components";
 
 const AIRDROP_TYPE = {
   WAIT_FOR_QUERY: "wait",
@@ -30,6 +25,11 @@ function Loading() {
 
 export default function Claim() {
   const { cashtag } = useParams();
+  // @todo: implement with backend
+  useEffect(() => {
+    console.log(cashtag);
+  }, [cashtag]);
+  /* eslint-disable */
   const [airdropDetail, updateDetail] = useState({
     type: AIRDROP_TYPE.RANDOM,
     symbol: "FWC",

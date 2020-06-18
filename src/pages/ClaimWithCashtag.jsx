@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  Form,
-  Container,
-  Button,
-  Notification,
-  Icon,
-} from "react-bulma-components";
-const { Field, Control, Label, Input, Radio } = Form;
+import { Form, Button } from "react-bulma-components";
+const { Field, Control, Input } = Form;
 
 export default function ClaimWithCashtag() {
   const history = useHistory();

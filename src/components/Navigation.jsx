@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
 import { Navbar } from "react-bulma-components";
 import { getAvatarUrl } from "../utils";
 

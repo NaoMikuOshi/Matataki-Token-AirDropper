@@ -1,18 +1,10 @@
 import React, { useEffect } from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   Button,
   Footer,
   Content,
-  Navbar,
   Hero,
   Container,
   Heading,
@@ -22,9 +14,7 @@ import Claim from "./pages/Claim";
 import Send from "./pages/Send";
 import Login from "./pages/Login";
 import ClaimWithCashtag from "./pages/ClaimWithCashtag";
-import { disassemble } from "./utils";
 import { getCookie } from "./utils/cookie";
-import { getUserProfile } from "./api/user";
 import Navigation from "./components/Navigation";
 
 export default function App() {
