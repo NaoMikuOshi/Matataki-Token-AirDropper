@@ -22,7 +22,7 @@ function UserStatusNavItems() {
   }
   if (userInfo.username) {
     return [
-      <Navbar.Item>
+      <Navbar.Item key="user">
         {userInfo.avatar && (
           <figure className="image is-32x32">
             <img
@@ -34,10 +34,16 @@ function UserStatusNavItems() {
         )}
         {userInfo.nickname || userInfo.username}
       </Navbar.Item>,
-      <Navbar.Item onClick={() => logout()}>Logout</Navbar.Item>,
+      <Navbar.Item key="action" onClick={() => logout()}>
+        Logout
+      </Navbar.Item>,
     ];
   } else {
-    return [<Navbar.Item href="/login">Sign In</Navbar.Item>];
+    return [
+      <Navbar.Item key="action" href="/login">
+        Sign In
+      </Navbar.Item>,
+    ];
   }
 }
 
