@@ -72,6 +72,21 @@ export default function Send() {
                 </Control>
               </Field>
               <Field>
+                <Label>Token ID</Label>
+                <Control>
+                  <Input
+                    placeholder="How long"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.tokenId}
+                    name="tokenId"
+                  />
+                  {errors.tokenId && touched.tokenId && (
+                    <Notification color="danger">{errors.tokenId}</Notification>
+                  )}
+                </Control>
+              </Field>
+              <Field>
                 <Label>
                   How many{" "}
                   <span role="img" aria-label="peoples">
