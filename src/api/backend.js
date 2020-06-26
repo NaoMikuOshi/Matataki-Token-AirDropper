@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "../utils/cookie";
 
 const client = axios.create({
   baseURL: process.env.REACT_APP_BACKEND_API,
