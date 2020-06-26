@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useStore } from "../store";
 import { Formik } from "formik";
 import { Container, Notification, Form, Button } from "react-bulma-components";
@@ -8,6 +9,7 @@ const { Field, Control, Label, Input } = Form;
 
 export default function Login() {
   const store = useStore();
+  const router = useHistory();
   const [errorMsg, setError] = useState({
     code: 0,
   });
@@ -37,6 +39,7 @@ export default function Login() {
               setError(result);
             } else {
               store.set("accessToken")(result.data);
+              router.push("/");
             }
             setSubmitting(false);
           });
