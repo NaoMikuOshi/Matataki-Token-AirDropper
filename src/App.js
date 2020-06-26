@@ -72,6 +72,8 @@ export default function App() {
 }
 
 function Home() {
+  const store = useStore();
+  const userInfo = store.get("userInfo");
   return (
     <section class="section">
       <Container>
@@ -85,20 +87,39 @@ function Home() {
               <Heading subtitle size={4}>
                 Share to anywhere with the magical link.
               </Heading>
-              <Link to="/send">
-                <Button
-                  color="primary"
-                  rounded={true}
-                  style={{ margin: "5px" }}
-                >
-                  Send
-                </Button>
-              </Link>
-              <Link to="/claim">
-                <Button color="light" rounded={true} style={{ margin: "5px" }}>
-                  Redeem
-                </Button>
-              </Link>
+
+              {userInfo.username ? (
+                <div className="action-buttons">
+                  <Link to="/send">
+                    <Button
+                      color="primary"
+                      rounded={true}
+                      style={{ margin: "5px" }}
+                    >
+                      Send
+                    </Button>
+                  </Link>
+                  <Link to="/claim">
+                    <Button
+                      color="light"
+                      rounded={true}
+                      style={{ margin: "5px" }}
+                    >
+                      Redeem
+                    </Button>
+                  </Link>
+                </div>
+              ) : (
+                <Link to="/login">
+                  <Button
+                    color="light"
+                    rounded={true}
+                    style={{ margin: "5px" }}
+                  >
+                    Login to continue
+                  </Button>
+                </Link>
+              )}
             </Container>
           </Hero.Body>
         </Hero>
