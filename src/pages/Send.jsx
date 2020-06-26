@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Container, Button, Notification } from "react-bulma-components";
 import { Formik } from "formik";
+import { createAirdrop } from "../api/backend";
 const { Field, Control, Label, Input, Radio } = Form;
 
 export default function Send() {
@@ -9,23 +10,39 @@ export default function Send() {
       <Container>
         <h1 className="title">Send Airdrop</h1>
         <Formik
-          initialValues={{ title: "", quantity: "", total: "", split: "Equal" }}
+          initialValues={{
+            title: "",
+            quantity: "",
+            amount: "",
+            split: "Equal",
+            duration: "0",
+            tokenId: "0",
+          }}
           validate={(values) => {
             const errors = {};
             if (!values.title) {
               errors.title = "Required";
             } else if (isNaN(values.quantity)) {
               errors.quantity = "Invalid quantity";
-            } else if (isNaN(values.total)) {
-              errors.total = "Invalid total amount";
+            } else if (isNaN(values.amount)) {
+              errors.amount = "Invalid total amount";
+            } else if (isNaN(values.duration)) {
+              errors.quantity = "Invalid day";
+            } else if (isNaN(values.tokenId)) {
+              errors.tokenId = "Invalid TokenID";
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
-              setSubmitting(false);
-            }, 400);
+          onSubmit={async (values, { setSubmitting }) => {
+            const result = await createAirdrop(
+              values.title,
+              parseInt(values.tokenId),
+              parseInt(values.amount),
+              parseInt(values.quantity),
+              parseInt(values.duration)
+            );
+            console.log(result);
+            setSubmitting(false);
           }}
         >
           {({
@@ -83,11 +100,11 @@ export default function Send() {
                     placeholder="Total Amount"
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.total}
+                    value={values.amount}
                     name="total"
                   />
-                  {errors.total && touched.total && (
-                    <Notification color="danger">{errors.total}</Notification>
+                  {errors.amount && touched.amount && (
+                    <Notification color="danger">{errors.amount}</Notification>
                   )}
                 </Control>
               </Field>
