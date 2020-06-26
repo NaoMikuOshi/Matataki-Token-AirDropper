@@ -101,7 +101,7 @@ export default function Send() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.amount}
-                    name="total"
+                    name="amount"
                   />
                   {errors.amount && touched.amount && (
                     <Notification color="danger">{errors.amount}</Notification>
@@ -109,6 +109,23 @@ export default function Send() {
                 </Control>
               </Field>
               <Field>
+                <Label>Duration</Label>
+                <Control>
+                  <Input
+                    placeholder="How long"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.duration}
+                    name="duration"
+                  />
+                  {errors.duration && touched.duration && (
+                    <Notification color="danger">
+                      {errors.duration}
+                    </Notification>
+                  )}
+                </Control>
+              </Field>
+              {/* <Field>
                 <Label>Which way to split?</Label>
                 <Control>
                   <Radio
@@ -130,7 +147,7 @@ export default function Send() {
                     Random
                   </Radio>
                 </Control>
-              </Field>
+              </Field> */}
               <Button color="primary" disabled={isSubmitting}>
                 Submit
               </Button>
