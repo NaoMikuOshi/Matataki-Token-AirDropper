@@ -1,10 +1,21 @@
 import React from "react";
+import "./send.scss";
+import { Link } from "react-router-dom";
 import { Form, Container, Button, Notification } from "react-bulma-components";
 import { Formik } from "formik";
 import { createAirdrop } from "../api/backend";
+import { useState } from "react";
+import { getAirdropUrl } from "../utils";
+import Clipboard from "clipboard";
 const { Field, Control, Label, Input, Radio } = Form;
 
+new Clipboard(".copy-btn");
+
 export default function Send() {
+  const [result, updateAirdrop] = useState(null);
+  if (result) {
+    return <AirDropResult result={result} />;
+  }
   return (
     <div className="send">
       <Container>
@@ -15,8 +26,8 @@ export default function Send() {
             quantity: "",
             amount: "",
             split: "Equal",
-            duration: "0",
-            tokenId: "0",
+            duration: "",
+            tokenId: "",
           }}
           validate={(values) => {
             const errors = {};
@@ -41,6 +52,7 @@ export default function Send() {
               parseInt(values.quantity),
               parseInt(values.duration)
             );
+            updateAirdrop(result);
             console.log(result);
             setSubmitting(false);
           }}
@@ -75,7 +87,7 @@ export default function Send() {
                 <Label>Token ID</Label>
                 <Control>
                   <Input
-                    placeholder="How long"
+                    placeholder="Matataki Token ID, pattern like: https://wwwtest.smartsignature.io/token/{tokenId}"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.tokenId}
@@ -127,7 +139,7 @@ export default function Send() {
                 <Label>Duration</Label>
                 <Control>
                   <Input
-                    placeholder="How long"
+                    placeholder="How many days this airdrop exist?"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.duration}
@@ -171,5 +183,42 @@ export default function Send() {
         </Formik>
       </Container>
     </div>
+  );
+}
+
+function AirDropResult({ result }) {
+  return (
+    <Container className="airdrop-result">
+      <h1 className="title">Your just launched Token Airdrop</h1>
+      <h2 className="subtitle">Your airdrop $cashtag is: ${result.hash_tag}</h2>
+      <p>You can copy the link below👇 and share it somewhere else</p>
+      <div className="copy-group">
+        <Input
+          readOnly
+          value={getAirdropUrl(result.hash_tag)}
+          id="share-url-input"
+          name="share-url"
+        />
+        <Button
+          color="primary"
+          className="copy-btn"
+          data-clipboard-target="#share-url-input"
+        >
+          Copy the link
+        </Button>
+      </div>
+      <p>
+        <Link to={`/claim/$${result.hash_tag}`}>
+          <Button color="primary" className="is-rounded">
+            Checkout the Airdrop
+          </Button>
+        </Link>
+      </p>
+      <p>
+        <Link to="/">
+          <Button className="is-rounded">Go home</Button>
+        </Link>
+      </p>
+    </Container>
   );
 }

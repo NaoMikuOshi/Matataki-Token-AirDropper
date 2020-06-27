@@ -1,0 +1,16 @@
+.airdrop-result {
+  text-align: center;
+  .copy-group {
+    width: 600px;
+    margin: 0 auto;
+    #share-url-input {
+      width: 70%;
+    }
+    .copy-btn {
+      width: 30%;
+    }
+  }
+  p {
+    margin: 10px 0;
+  }
+}

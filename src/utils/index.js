@@ -9,3 +9,7 @@ export function disassemble(token) {
   tokenPayload = tokenPayload.substring(0, tokenPayload.indexOf("."));
   return JSON.parse(atob(tokenPayload));
 }
+
+export function getAirdropUrl(cashtag) {
+  return `${window.location.origin}/claim/$${cashtag}`;
+}
