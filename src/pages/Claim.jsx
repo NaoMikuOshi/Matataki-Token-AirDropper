@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./claim.scss";
 import { useParams } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
+import { getDetailOfAirdrop } from "../api/backend";
+import { getUserProfile } from "../api/user";
+import { getAvatarUrl } from "../utils";
+import { getTokenProfile } from "../api/token";
 
 const AIRDROP_TYPE = {
   WAIT_FOR_QUERY: "wait",
@@ -25,60 +29,30 @@ function Loading() {
 
 export default function Claim() {
   const { cashtag } = useParams();
-  // @todo: implement with backend
+  const [airdropDetail, updateDetail] = useState(null);
+  const [owner, updateOwner] = useState(null);
+  const [token, updateToken] = useState(null);
+
+  // @todo: get token data
   useEffect(() => {
-    console.log(cashtag);
+    async function fetchData() {
+      const detail = await getDetailOfAirdrop(cashtag);
+      updateDetail(detail);
+      const [ownerProfile, tokenProfile] = await Promise.all([
+        getUserProfile(detail.owner),
+        getTokenProfile(detail.token_id),
+      ]);
+      // const ownerProfile = await
+      updateOwner(ownerProfile.data);
+      // const tokenProfile = await
+      updateToken(tokenProfile.data.token);
+    }
+    fetchData();
   }, [cashtag]);
   /* eslint-disable */
-  const [airdropDetail, updateDetail] = useState({
-    type: AIRDROP_TYPE.RANDOM,
-    symbol: "FWC",
-    sum: 10000 * 20,
-    quantity: {
-      total: 20,
-      remain: 19,
-    },
-    history: [
-      {
-        nickname: "Anonymous",
-        amount: "10000",
-        avatar:
-          "https://ssimg.frontenduse.top/avatar/2019/12/27/1a128129ee9c72b855ecc956da588d45.jpg",
-      },
-      {
-        nickname: "Link",
-        amount: "20000",
-        avatar:
-          "https://ssimg.frontenduse.top/avatar/2019/12/27/1a128129ee9c72b855ecc956da588d45.jpg",
-      },
-      {
-        nickname: "Xiaodao",
-        amount: "80000",
-        avatar:
-          "https://ssimg.frontenduse.top/avatar/2019/12/27/1a128129ee9c72b855ecc956da588d45.jpg",
-      },
-    ],
-    sender: {
-      uid: 9527,
-      nickname: "Frank",
-      avatar:
-        "https://ssimg.frontenduse.top/avatar/2019/12/27/1a128129ee9c72b855ecc956da588d45.jpg",
-    },
-  });
-  const claimButtonText = (() => {
-    switch (airdropDetail.type) {
-      case AIRDROP_TYPE.EQUAL: {
-        const amount = airdropDetail.sum / airdropDetail.quantity.total / 10000; // 4 demcial means 10000 is 1 Token
-        return `Claim ${amount} ${airdropDetail.symbol}`;
-      }
-      case AIRDROP_TYPE.RANDOM:
-        return "Claim with luck";
-      default:
-        return "Fetching Infomation...";
-    }
-  })();
+  const claimButtonText = "Claim with luck";
 
-  if (airdropDetail.type === AIRDROP_TYPE.WAIT_FOR_QUERY) {
+  if (!airdropDetail || !owner || !token) {
     return <Loading />;
   }
   return (
@@ -87,7 +61,7 @@ export default function Claim() {
       style={{ maxWidth: "650px", margin: "10px auto" }}
     >
       <p className="panel-heading">
-        Air Drop of Total {airdropDetail.sum} {airdropDetail.symbol}
+        Air Drop of Total {airdropDetail.amount / 10000} {token.symbol}
       </p>
       <Heading subtitle renderAs="p">
         Sent to you by
@@ -98,11 +72,11 @@ export default function Claim() {
             <img
               className="is-rounded"
               alt="User avatar"
-              src={airdropDetail.sender.avatar}
+              src={getAvatarUrl(owner.avatar)}
             />
           </figure>
         </div>
-        <Heading size={5}>{airdropDetail.sender.nickname}</Heading>
+        <Heading size={5}>{owner.nickname || owner.username}</Heading>
       </div>
       <Button className="is-rounded is-primary">{claimButtonText}</Button>
       <div
@@ -110,7 +84,7 @@ export default function Claim() {
         style={{ maxWidth: "600px", margin: "10px auto" }}
       >
         <p className="panel-heading">Records of Claim</p>
-        <p className="panel-block">
+        {/* <p className="panel-block">
           Remain:{" "}
           <code>
             {airdropDetail.quantity.remain} / {airdropDetail.quantity.total}
@@ -130,7 +104,7 @@ export default function Claim() {
               {airdropDetail.symbol}
             </div>
           );
-        })}
+        })} */}
       </div>
     </Container>
   );
