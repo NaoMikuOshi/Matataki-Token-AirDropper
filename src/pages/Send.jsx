@@ -192,7 +192,13 @@ function AirDropResult({ result }) {
     <Container className="airdrop-result">
       <h1 className="title">Your just launched Token Airdrop</h1>
       <h2 className="subtitle">Your airdrop $cashtag is: ${result.hash_tag}</h2>
-      <p>You can copy the link below👇 and share it somewhere else</p>
+      <p>
+        You can copy the link below{" "}
+        <span role="img" aria-label="below">
+          👇
+        </span>{" "}
+        and share it somewhere else
+      </p>
       <div className="copy-group">
         <Input
           readOnly

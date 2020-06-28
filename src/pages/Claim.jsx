@@ -7,11 +7,11 @@ import { getUserProfile } from "../api/user";
 import { getAvatarUrl } from "../utils";
 import { getTokenProfile } from "../api/token";
 
-const AIRDROP_TYPE = {
-  WAIT_FOR_QUERY: "wait",
-  EQUAL: "equal",
-  RANDOM: "random",
-};
+// const AIRDROP_TYPE = {
+//   WAIT_FOR_QUERY: "wait",
+//   EQUAL: "equal",
+//   RANDOM: "random",
+// };
 
 function Loading() {
   return (
