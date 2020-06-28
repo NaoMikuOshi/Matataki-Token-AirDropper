@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./claim.scss";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
 import { getDetailOfAirdrop, claimAirdrop } from "../api/backend";
 import { getUserProfile } from "../api/user";
@@ -32,24 +32,41 @@ export default function Claim() {
   const [airdropDetail, updateDetail] = useState(null);
   const [owner, updateOwner] = useState(null);
   const [token, updateToken] = useState(null);
+  const [errorMsg, updateError] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
-      const detail = await getDetailOfAirdrop(cashtag);
-      updateDetail(detail);
-      const [ownerProfile, tokenProfile] = await Promise.all([
-        getUserProfile(detail.owner),
-        getTokenProfile(detail.token_id),
-      ]);
-      // const ownerProfile = await
-      updateOwner(ownerProfile.data);
-      // const tokenProfile = await
-      updateToken(tokenProfile.data.token);
+      try {
+        const detail = await getDetailOfAirdrop(cashtag);
+        updateDetail(detail);
+        const [ownerProfile, tokenProfile] = await Promise.all([
+          getUserProfile(detail.owner),
+          getTokenProfile(detail.token_id),
+        ]);
+        // const ownerProfile = await
+        updateOwner(ownerProfile.data);
+        // const tokenProfile = await
+        updateToken(tokenProfile.data.token);
+      } catch (error) {
+        updateError(error);
+      }
     }
     fetchData();
   }, [cashtag]);
 
-  if (!airdropDetail || !owner || !token) {
+  if (errorMsg && errorMsg.response.status === 404) {
+    return (
+      <div className="error">
+        <Heading>Airdrop Not found</Heading>
+        <Heading subtitle>
+          Please checkout your link, or refresh this page.
+        </Heading>
+        <Link to="/">
+          <Button className="is-rounded">Go home</Button>
+        </Link>
+      </div>
+    );
+  } else if (!airdropDetail || !owner || !token) {
     return <Loading />;
   }
   return (
