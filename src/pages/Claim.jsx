@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./claim.scss";
 import { useParams } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
-import { getDetailOfAirdrop } from "../api/backend";
+import { getDetailOfAirdrop, claimAirdrop } from "../api/backend";
 import { getUserProfile } from "../api/user";
 import { getAvatarUrl } from "../utils";
 import { getTokenProfile } from "../api/token";
@@ -33,7 +33,6 @@ export default function Claim() {
   const [owner, updateOwner] = useState(null);
   const [token, updateToken] = useState(null);
 
-  // @todo: get token data
   useEffect(() => {
     async function fetchData() {
       const detail = await getDetailOfAirdrop(cashtag);
@@ -49,8 +48,6 @@ export default function Claim() {
     }
     fetchData();
   }, [cashtag]);
-  /* eslint-disable */
-  const claimButtonText = "Claim with luck";
 
   if (!airdropDetail || !owner || !token) {
     return <Loading />;
@@ -78,7 +75,7 @@ export default function Claim() {
         </div>
         <Heading size={5}>{owner.nickname || owner.username}</Heading>
       </div>
-      <Button className="is-rounded is-primary">{claimButtonText}</Button>
+      <MyClaim cashtag={cashtag} token={token} style={{ margin: "10px" }} />
       <div
         className="panel is-info"
         style={{ maxWidth: "600px", margin: "10px auto" }}
@@ -108,4 +105,55 @@ export default function Claim() {
       </div>
     </Container>
   );
+}
+
+function MyClaim({ cashtag, token }) {
+  const [isLoading, updateLoading] = useState(false);
+  // @todo: fetch user's status on this airdrop is needed.
+  const [claimResult, updateClaimResult] = useState(null);
+
+  const claimButtonText = (() => (isLoading ? "Hold on..." : "Claim"))();
+
+  async function clickToClaim() {
+    updateLoading(true);
+    const result = await claimAirdrop(cashtag);
+    updateClaimResult(result);
+    updateLoading(false);
+  }
+
+  if (claimResult) {
+    return (
+      <div className="results">
+        <Heading size={4}>
+          <span role="img" aria-label="cheer">
+            🎉
+          </span>{" "}
+          Congratulations!{" "}
+          <span role="img" aria-label="cheer">
+            🎉
+          </span>
+        </Heading>
+        <Heading subtitle renderAs="p" size={6}>
+          You just got {claimResult.amount / 10000} {token.symbol} from this
+          Airdrop.
+        </Heading>
+        <p className="tips">
+          Your requested airdrop is in line.
+          <br /> Will be drop in your Matataki Wallet soon.
+        </p>
+      </div>
+    );
+  } else {
+    return (
+      <div className="actions">
+        <Button
+          className="is-rounded is-primary"
+          onClick={(e) => clickToClaim()}
+          disabled={isLoading}
+        >
+          {claimButtonText}
+        </Button>
+      </div>
+    );
+  }
 }
