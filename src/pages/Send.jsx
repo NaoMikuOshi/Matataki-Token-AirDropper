@@ -191,7 +191,7 @@ function AirDropResult({ result }) {
   return (
     <Container className="airdrop-result">
       <h1 className="title">Your just launched Token Airdrop</h1>
-      <h2 className="subtitle">Your airdrop $cashtag is: ${result.hash_tag}</h2>
+      <h2 className="subtitle">Your airdrop $cashtag is: ${result.cashtag}</h2>
       <p>
         You can copy the link below{" "}
         <span role="img" aria-label="below">
@@ -202,7 +202,7 @@ function AirDropResult({ result }) {
       <div className="copy-group">
         <Input
           readOnly
-          value={getAirdropUrl(result.hash_tag)}
+          value={getAirdropUrl(result.cashtag)}
           id="share-url-input"
           name="share-url"
         />
@@ -215,7 +215,7 @@ function AirDropResult({ result }) {
         </Button>
       </div>
       <p>
-        <Link to={`/claim/$${result.hash_tag}`}>
+        <Link to={`/claim/$${result.cashtag}`}>
           <Button color="primary" className="is-rounded">
             Checkout the Airdrop
           </Button>
