@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import ClaimWithCashtag from "./pages/ClaimWithCashtag";
 import { getCookie } from "./utils/cookie";
 import Navigation from "./components/Navigation";
+import FooterEffect from "./components/footer";
 
 export default function App() {
   const store = useStore();
@@ -46,6 +47,7 @@ export default function App() {
           </Route>
         </Switch>
       </div>
+      <FooterEffect />
       <Footer style={{ padding: "1.5rem" }}>
         <Content className="has-text-centered">
           <p>
