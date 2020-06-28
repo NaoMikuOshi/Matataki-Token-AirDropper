@@ -152,7 +152,7 @@ export default function Send() {
                   )}
                 </Control>
               </Field>
-              {/* <Field>
+              <Field>
                 <Label>Which way to split?</Label>
                 <Control>
                   <Radio
@@ -170,11 +170,12 @@ export default function Send() {
                     checked={values.split === "Random"}
                     value="Random"
                     name="split"
+                    disabled
                   >
                     Random
                   </Radio>
                 </Control>
-              </Field> */}
+              </Field>
               <Button color="primary" disabled={isSubmitting}>
                 Submit
               </Button>
