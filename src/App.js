@@ -59,8 +59,8 @@ export default function App() {
               </span>{" "}
               Nao KM All Right Reserved.
               <br />
-              This is a 3rd party apps develop for Matataki.
-              <br />I have open sourced the code right here:
+              This is a 3rd party apps for Matataki, and project was open
+              sourced the at{" "}
               <a
                 href={process.env.REACT_APP_FE_REPO}
                 target="_blank"
