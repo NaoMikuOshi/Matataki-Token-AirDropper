@@ -16,7 +16,7 @@ import Login from "./pages/Login";
 import ClaimWithCashtag from "./pages/ClaimWithCashtag";
 import { getCookie } from "./utils/cookie";
 import Navigation from "./components/Navigation";
-import FooterEffect from "./components/Footer";
+import FooterEffect from "./components/FooterEffect";
 import "./index.css";
 
 export default function App() {
