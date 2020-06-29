@@ -4,9 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
 import { getDetailOfAirdrop, claimAirdrop } from "../api/backend";
 import { getUserProfile } from "../api/user";
-import { getAvatarUrl } from "../utils";
 import { getTokenProfile } from "../api/token";
 import { ClaimLogs } from "../components/ClaimLogs";
+import Avatar from "../components/Avatar";
 
 // const AIRDROP_TYPE = {
 //   WAIT_FOR_QUERY: "wait",
@@ -83,13 +83,7 @@ export default function Claim() {
       </Heading>
       <div className="user-card">
         <div className="avatar is-flex is-horizontal-center">
-          <figure className="image is-128x128 is-flex is-horizontal-center">
-            <img
-              className="is-rounded"
-              alt="User avatar"
-              src={getAvatarUrl(owner.avatar)}
-            />
-          </figure>
+          <Avatar size={128} location={owner.avatar} />
         </div>
         <Heading size={5}>{owner.nickname || owner.username}</Heading>
       </div>
