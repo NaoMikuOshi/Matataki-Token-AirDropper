@@ -3,7 +3,7 @@ import React from "react";
 class FooterEffect extends React.Component {
   render() {
     return (
-      <div>
+      <div class="waves">
         <svg
           class="waves"
           xmlns="http://www.w3.org/2000/svg"

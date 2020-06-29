@@ -16,7 +16,8 @@ import Login from "./pages/Login";
 import ClaimWithCashtag from "./pages/ClaimWithCashtag";
 import { getCookie } from "./utils/cookie";
 import Navigation from "./components/Navigation";
-import FooterEffect from "./components/footer";
+import FooterEffect from "./components/Footer";
+import "./index.css";
 
 export default function App() {
   const store = useStore();
@@ -47,28 +48,30 @@ export default function App() {
           </Route>
         </Switch>
       </div>
-      <FooterEffect />
-      <Footer style={{ padding: "1.5rem" }}>
-        <Content className="has-text-centered">
-          <p>
-            Matataki Token AirDropper{" "}
-            <span role="img" aria-label="copyright">
-              ©️
-            </span>{" "}
-            Nao KM All Right Reserved.
-            <br />
-            This is a 3rd party apps develop for Matataki.
-            <br />I have open sourced the code right here:
-            <a
-              href={process.env.REACT_APP_FE_REPO}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </p>
-        </Content>
-      </Footer>
+      <div class="footer">
+        <Footer>
+          <FooterEffect />
+          <Content className="has-text-centered">
+            <p>
+              Matataki Token AirDropper{" "}
+              <span role="img" aria-label="copyright">
+                ©️
+              </span>{" "}
+              Nao KM All Right Reserved.
+              <br />
+              This is a 3rd party apps develop for Matataki.
+              <br />I have open sourced the code right here:
+              <a
+                href={process.env.REACT_APP_FE_REPO}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </p>
+          </Content>
+        </Footer>
+      </div>
     </Router>
   );
 }
@@ -77,8 +80,8 @@ function Home() {
   const store = useStore();
   const userInfo = store.get("userInfo");
   return (
-    <section class="section">
-      <Container>
+    <div>
+      <div class="top">
         <Hero color="primary" gradient>
           <Hero.Body>
             <Container>
@@ -125,7 +128,10 @@ function Home() {
             </Container>
           </Hero.Body>
         </Hero>
-      </Container>
-    </section>
+      </div>
+      <section class="section">
+        <Container></Container>
+      </section>
+    </div>
   );
 }
