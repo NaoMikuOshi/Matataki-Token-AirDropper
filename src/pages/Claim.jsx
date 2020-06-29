@@ -6,6 +6,7 @@ import { getDetailOfAirdrop, claimAirdrop } from "../api/backend";
 import { getUserProfile } from "../api/user";
 import { getAvatarUrl } from "../utils";
 import { getTokenProfile } from "../api/token";
+import { ClaimLogs } from "../components/ClaimLogs";
 
 // const AIRDROP_TYPE = {
 //   WAIT_FOR_QUERY: "wait",
@@ -103,22 +104,9 @@ export default function Claim() {
           <code>
             {airdropDetail.quantity.remain} / {airdropDetail.quantity.total}
           </code>
-        </p>
-        {airdropDetail.history.map((record) => {
-          return (
-            <div className="panel-block is-active">
-              <figure className="image is-32x32">
-                <img
-                  className="is-rounded"
-                  alt="User avatar"
-                  src={record.avatar}
-                />
-              </figure>
-              {record.nickname} Got {record.amount / 10000}{" "}
-              {airdropDetail.symbol}
-            </div>
-          );
-        })} */}
+        </p> */}
+
+        <ClaimLogs claimLogs={airdropDetail.claimLogs} token={token} />
       </div>
     </Container>
   );
