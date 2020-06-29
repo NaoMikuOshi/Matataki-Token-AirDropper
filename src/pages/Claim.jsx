@@ -78,29 +78,25 @@ export default function Claim() {
       <p className="panel-heading">
         Air Drop of Total {airdropDetail.amount / 10000} {token.symbol}
       </p>
-      <Heading subtitle renderAs="p">
-        Sent to you by
-      </Heading>
-      <div className="user-card">
-        <div className="avatar is-flex is-horizontal-center">
-          <Avatar size={128} location={owner.avatar} />
+      <div className="panel-body" style={{ padding: "10px" }}>
+        <Heading subtitle renderAs="p">
+          Sent to you by
+        </Heading>
+        <div className="user-card">
+          <div className="avatar is-flex is-horizontal-center">
+            <Avatar size={128} location={owner.avatar} />
+          </div>
+          <Heading size={5}>{owner.nickname || owner.username}</Heading>
         </div>
-        <Heading size={5}>{owner.nickname || owner.username}</Heading>
-      </div>
-      <MyClaim cashtag={cashtag} token={token} style={{ margin: "10px" }} />
-      <div
-        className="panel is-info"
-        style={{ maxWidth: "600px", margin: "10px auto" }}
-      >
-        <p className="panel-heading">Records of Claim</p>
-        {/* <p className="panel-block">
-          Remain:{" "}
-          <code>
-            {airdropDetail.quantity.remain} / {airdropDetail.quantity.total}
-          </code>
-        </p> */}
-
-        <ClaimLogs claimLogs={airdropDetail.claimLogs} token={token} />
+        <MyClaim cashtag={cashtag} token={token} style={{ margin: "10px" }} />
+        <div
+          className="panel is-info"
+          style={{ maxWidth: "600px", margin: "10px auto" }}
+        >
+          <p className="panel-heading">Records of Claim</p>
+          <ClaimStat airdropDetail={airdropDetail} />
+          <ClaimLogs claimLogs={airdropDetail.claimLogs} token={token} />
+        </div>
       </div>
     </Container>
   );
@@ -155,4 +151,24 @@ function MyClaim({ cashtag, token }) {
       </div>
     );
   }
+}
+
+function ClaimStat({ airdropDetail }) {
+  const claimed = airdropDetail.claimLogs.length;
+  const quantity = airdropDetail.quantity;
+  const remain = quantity - claimed;
+  return (
+    <p className="panel-block">
+      Claimed:{" "}
+      <code>
+        {" "}
+        {claimed}/{quantity}{" "}
+      </code>
+      , Remain:{" "}
+      <code>
+        {" "}
+        {remain}/{quantity}{" "}
+      </code>
+    </p>
+  );
 }
