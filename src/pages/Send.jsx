@@ -25,7 +25,7 @@ export default function Send() {
             title: "",
             quantity: "",
             amount: "",
-            split: "Equal",
+            split: "equal",
             tokenId: "",
           }}
           validate={(values) => {
