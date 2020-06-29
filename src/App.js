@@ -48,7 +48,7 @@ export default function App() {
           </Route>
         </Switch>
       </div>
-      <div class="footer">
+      <div className="footer">
         <Footer>
           <FooterEffect />
           <Content className="has-text-centered">
@@ -81,7 +81,7 @@ function Home() {
   const userInfo = store.get("userInfo");
   return (
     <div>
-      <div class="top">
+      <div className="top">
         <Hero color="primary" gradient>
           <Hero.Body>
             <Container>
@@ -129,7 +129,7 @@ function Home() {
           </Hero.Body>
         </Hero>
       </div>
-      <section class="section">
+      <section className="section">
         <Container></Container>
       </section>
     </div>
