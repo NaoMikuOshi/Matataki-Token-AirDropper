@@ -25,8 +25,7 @@ export default function Send() {
             title: "",
             quantity: "",
             amount: "",
-            split: "Equal",
-            duration: "",
+            split: "equal",
             tokenId: "",
           }}
           validate={(values) => {
@@ -37,8 +36,6 @@ export default function Send() {
               errors.quantity = "Invalid quantity";
             } else if (isNaN(values.amount)) {
               errors.amount = "Invalid total amount";
-            } else if (isNaN(values.duration)) {
-              errors.quantity = "Invalid day";
             } else if (isNaN(values.tokenId)) {
               errors.tokenId = "Invalid TokenID";
             }
@@ -50,7 +47,7 @@ export default function Send() {
               parseInt(values.tokenId),
               parseInt(values.amount),
               parseInt(values.quantity),
-              parseInt(values.duration)
+              values.split
             );
             updateAirdrop(result);
             console.log(result);
@@ -136,30 +133,13 @@ export default function Send() {
                 </Control>
               </Field>
               <Field>
-                <Label>Duration</Label>
-                <Control>
-                  <Input
-                    placeholder="How many days this airdrop exist?"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.duration}
-                    name="duration"
-                  />
-                  {errors.duration && touched.duration && (
-                    <Notification color="danger">
-                      {errors.duration}
-                    </Notification>
-                  )}
-                </Control>
-              </Field>
-              <Field>
                 <Label>Which way to split?</Label>
                 <Control>
                   <Radio
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    checked={values.split === "Equal"}
-                    value="Equal"
+                    checked={values.split === "equal"}
+                    value="equal"
                     name="split"
                   >
                     Equally
@@ -167,8 +147,8 @@ export default function Send() {
                   <Radio
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    checked={values.split === "Random"}
-                    value="Random"
+                    checked={values.split === "random"}
+                    value="random"
                     name="split"
                     disabled
                   >
@@ -191,7 +171,7 @@ function AirDropResult({ result }) {
   return (
     <Container className="airdrop-result">
       <h1 className="title">Your just launched Token Airdrop</h1>
-      <h2 className="subtitle">Your airdrop $cashtag is: ${result.hash_tag}</h2>
+      <h2 className="subtitle">Your airdrop $cashtag is: ${result.cashtag}</h2>
       <p>
         You can copy the link below{" "}
         <span role="img" aria-label="below">
@@ -202,7 +182,7 @@ function AirDropResult({ result }) {
       <div className="copy-group">
         <Input
           readOnly
-          value={getAirdropUrl(result.hash_tag)}
+          value={getAirdropUrl(result.cashtag)}
           id="share-url-input"
           name="share-url"
         />
@@ -215,7 +195,7 @@ function AirDropResult({ result }) {
         </Button>
       </div>
       <p>
-        <Link to={`/claim/$${result.hash_tag}`}>
+        <Link to={`/claim/$${result.cashtag}`}>
           <Button color="primary" className="is-rounded">
             Checkout the Airdrop
           </Button>

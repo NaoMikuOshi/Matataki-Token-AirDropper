@@ -1,9 +1,9 @@
 import React from "react";
 import { Navbar } from "react-bulma-components";
-import { getAvatarUrl } from "../utils";
 
 import { useStore } from "../store";
 import { removeCookie } from "../utils/cookie";
+import Avatar from "./Avatar";
 
 function UserStatusNavItems() {
   const store = useStore();
@@ -15,15 +15,7 @@ function UserStatusNavItems() {
   if (userInfo.username) {
     return [
       <Navbar.Item key="user">
-        {userInfo.avatar && (
-          <figure className="image is-32x32">
-            <img
-              className="is-rounded"
-              alt="User avatar"
-              src={getAvatarUrl(userInfo.avatar)}
-            />
-          </figure>
-        )}
+        <Avatar location={userInfo.avatar} size={28} />
         {userInfo.nickname || userInfo.username}
       </Navbar.Item>,
       <Navbar.Item key="action" onClick={() => logout()}>

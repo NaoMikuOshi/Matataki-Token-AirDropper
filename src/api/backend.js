@@ -80,15 +80,15 @@ client.interceptors.response.use(
  * @param {number} tokenId fan票id
  * @param {number} amount 空投总量
  * @param {number} quantity 空投份额
- * @param {number} duration 持续时间（单位：天）
+ * @param {string} type 空投类型，只能是 'random' 或 'equal'
  */
-export function createAirdrop(title, tokenId, amount, quantity, duration) {
+export function createAirdrop(title, tokenId, amount, quantity, type) {
   return client.post("/airdrop", {
     title,
     tokenId,
     amount,
     quantity,
-    duration,
+    type,
   });
 }
 
