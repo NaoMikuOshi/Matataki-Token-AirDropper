@@ -28,8 +28,12 @@ function ClaimLog({ claimLog, token }) {
   return (
     <div className="panel-block is-active">
       <Avatar location={data.data.avatar} />
-      {data.data.nickname} Got {claimLog.amount / 10000}
-      {token.symbol}
+      <div class="logs">
+        <span>
+          {data.data.nickname} Got {claimLog.amount / 10000}
+        </span>
+        <span>{token.symbol}</span>
+      </div>
     </div>
   );
 }

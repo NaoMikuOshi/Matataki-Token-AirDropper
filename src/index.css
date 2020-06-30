@@ -24,16 +24,43 @@ code {
   right: 0;
 }
 
+.send {
+  margin-top: 20px;
+}
+
+#root {
+  min-height: 95vh !important;
+}
+
+#root > .footer {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  position: relative;
+  background-color: white;
+  z-index: -99;
+}
+
 #root > .footer > .footer {
   padding-top: 1.5rem !important;
   padding-right: 0 !important;
   padding-left: 0 !important;
   padding-bottom: 1.5rem !important;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background-color: white;
+  z-index: -99;
+}
+
+.title.is-5 {
+  margin: 1.2rem;
+}
+
+.log-avatar {
+  object-fit: scale-down;
+}
+
+.logs {
+  margin-left: 0.8rem;
+  word-break: break-word;
 }
 
 .waves {
@@ -42,7 +69,7 @@ code {
   height: 15vh; /*Fix for safari gap*/
   min-height: 100px;
   max-height: 200px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
