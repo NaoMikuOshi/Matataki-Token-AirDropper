@@ -10,7 +10,7 @@ export default function Avatar({ size = 32, location }) {
   return (
     <figure className={`image is-${size}x${size}`}>
       <img
-        className="is-rounded log-avatar"
+        className="log-avatar"
         alt="User avatar"
         src={avatarUrl}
         style={{ width: size, height: size }}

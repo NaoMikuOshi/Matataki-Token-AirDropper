@@ -39,6 +39,7 @@ code {
   padding-left: 0 !important;
   position: relative;
   background-color: white;
+  z-index: -99;
 }
 
 #root > .footer > .footer {
@@ -46,6 +47,7 @@ code {
   padding-right: 0 !important;
   padding-left: 0 !important;
   padding-bottom: 1.5rem !important;
+  z-index: -99;
 }
 
 .title.is-5 {
@@ -53,11 +55,11 @@ code {
 }
 
 .log-avatar {
-  object-fit: cover;
+  object-fit: scale-down;
 }
 
 .logs {
-  margin-left: 1.5rem;
+  margin-left: 0.8rem;
   word-break: break-word;
 }
 
