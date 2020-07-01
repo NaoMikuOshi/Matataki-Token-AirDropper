@@ -19,10 +19,10 @@ function ClaimLog({ claimLog, token }) {
   );
 
   if (error) {
-    return <div>failed to load</div>;
+    return <div className="panel-block is-active">failed to load</div>;
   }
   if (loading) {
-    return <div>loading...</div>;
+    return <div className="panel-block is-active">loading...</div>;
   }
 
   return (
