@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./claim.scss";
 import { useRequest } from "ahooks";
-import { useStore } from "../store";
 import { useParams, Link } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
 import {
@@ -103,7 +102,7 @@ export default function Claim() {
 
 function MyClaim({ cashtag, token }) {
   const [isSendingClaim, updateLoading] = useState(false);
-  const { data, loading, error } = useRequest(() => checkIsClaimed(cashtag));
+  const { data, loading } = useRequest(() => checkIsClaimed(cashtag));
   const [claimResult, updateClaimResult] = useState(null);
   const isClaimed = data && data.isClaimed;
 
