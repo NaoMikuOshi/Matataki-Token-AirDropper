@@ -29,23 +29,28 @@ export default function Send() {
             tokenId: "",
           }}
           validate={(values) => {
+            const numberRegex = /^\d+(\.\d{1,4})?$/;
             const errors = {};
             if (!values.title) {
               errors.title = "Required";
             } else if (isNaN(values.quantity)) {
               errors.quantity = "Invalid quantity";
-            } else if (isNaN(values.amount)) {
-              errors.amount = "Invalid total amount";
+            } else if (
+              isNaN(values.amount) ||
+              !numberRegex.test(values.amount)
+            ) {
+              errors.amount = "Invalid total amount. 4 digits max.";
             } else if (isNaN(values.tokenId)) {
               errors.tokenId = "Invalid TokenID";
             }
             return errors;
           }}
           onSubmit={async (values, { setSubmitting }) => {
+            const decimal = 4;
             const result = await createAirdrop(
               values.title,
               parseInt(values.tokenId),
-              parseInt(values.amount),
+              Number(values.amount) * 10 ** decimal,
               parseInt(values.quantity),
               values.split
             );
