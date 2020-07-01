@@ -6,8 +6,8 @@ import { getClaimLogs } from "../api/backend";
 
 export function ClaimLogs({ cashtag, ...props }) {
   const { data, error, loading } = useRequest(() => getClaimLogs(cashtag), {
-    pollingWhenHidden: true,
-    pollingInterval: 1000 * 10,
+    // pollingWhenHidden: true,
+    // pollingInterval: 1000 * 10,
   });
   if (error) {
     return <div className="claim-logs">Failed to History of Claimed</div>;
