@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import "./claim.scss";
 import { useRequest } from "ahooks";
+import { useStore } from "../store";
 import { useParams, Link } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
-import { getDetailOfAirdrop, claimAirdrop } from "../api/backend";
+import {
+  getDetailOfAirdrop,
+  claimAirdrop,
+  checkIsClaimed,
+} from "../api/backend";
 import { getUserProfile } from "../api/user";
 import { getTokenProfile } from "../api/token";
 import { ClaimLogs } from "../components/ClaimLogs";
@@ -97,11 +102,19 @@ export default function Claim() {
 }
 
 function MyClaim({ cashtag, token }) {
-  const [isLoading, updateLoading] = useState(false);
-  // @todo: fetch user's status on this airdrop is needed.
+  const [isSendingClaim, updateLoading] = useState(false);
+  const { data, loading, error } = useRequest(() => checkIsClaimed(cashtag));
   const [claimResult, updateClaimResult] = useState(null);
+  const isClaimed = data && data.isClaimed;
 
-  const claimButtonText = (() => (isLoading ? "Hold on..." : "Claim"))();
+  const claimButtonText = (() =>
+    loading
+      ? "Checking with server..."
+      : isClaimed
+      ? "Claimed"
+      : isSendingClaim
+      ? "Sending request, hold on..."
+      : "Claim")();
 
   async function clickToClaim() {
     updateLoading(true);
@@ -138,7 +151,7 @@ function MyClaim({ cashtag, token }) {
         <Button
           className="is-rounded is-primary"
           onClick={(e) => clickToClaim()}
-          disabled={isLoading}
+          disabled={isClaimed || isSendingClaim}
         >
           {claimButtonText}
         </Button>

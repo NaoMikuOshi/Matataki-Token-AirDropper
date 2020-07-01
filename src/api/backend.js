@@ -117,3 +117,7 @@ export function claimAirdrop(cashtag, memo = "") {
 export function getClaimLogs(cashtag) {
   return client.get(`/claim/${cashtag}`);
 }
+
+export function checkIsClaimed(cashtag) {
+  return client.get(`/airdrop/${cashtag}/isClaimed`);
+}
