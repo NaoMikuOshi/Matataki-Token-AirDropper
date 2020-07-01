@@ -2,11 +2,19 @@ import React from "react";
 import { useRequest } from "ahooks";
 import { getUserProfile } from "../api/user";
 import Avatar from "./Avatar";
+import { getClaimLogs } from "../api/backend";
 
-export function ClaimLogs({ claimLogs, ...props }) {
+export function ClaimLogs({ cashtag, ...props }) {
+  const { data, error, loading } = useRequest(() => getClaimLogs(cashtag));
+  if (error) {
+    return <div className="claim-logs">Failed to History of Claimed</div>;
+  }
+  if (loading) {
+    return <div className="claim-logs">Loading Claimed History...</div>;
+  }
   return (
     <div className="claim-logs">
-      {claimLogs.map((claimLog) => (
+      {data.claimLogs.map((claimLog) => (
         <ClaimLog key={claimLog.id} claimLog={claimLog} {...props} />
       ))}
     </div>

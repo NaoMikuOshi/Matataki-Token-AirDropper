@@ -113,3 +113,7 @@ export function getDetailOfAirdrop(cashtag) {
 export function claimAirdrop(cashtag, memo = "") {
   return client.post(`/airdrop/${cashtag}`, { memo });
 }
+
+export function getClaimLogs(cashtag) {
+  return client.get(`/claim/${cashtag}`);
+}

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./claim.scss";
+import { useRequest } from "ahooks";
 import { useParams, Link } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
 import { getDetailOfAirdrop, claimAirdrop } from "../api/backend";
@@ -30,32 +31,19 @@ function Loading() {
 
 export default function Claim() {
   const { cashtag } = useParams();
-  const [airdropDetail, updateDetail] = useState(null);
-  const [owner, updateOwner] = useState(null);
-  const [token, updateToken] = useState(null);
-  const [errorMsg, updateError] = useState(null);
+  async function getAirdrop() {
+    const detail = await getDetailOfAirdrop(cashtag);
+    const [ownerProfile, tokenProfile] = await Promise.all([
+      getUserProfile(detail.owner),
+      getTokenProfile(detail.token_id),
+    ]);
+    const owner = ownerProfile.data;
+    const token = tokenProfile.data.token;
+    return { detail, owner, token };
+  }
+  const { data, error, loading } = useRequest(getAirdrop);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const detail = await getDetailOfAirdrop(cashtag);
-        updateDetail(detail);
-        const [ownerProfile, tokenProfile] = await Promise.all([
-          getUserProfile(detail.owner),
-          getTokenProfile(detail.token_id),
-        ]);
-        // const ownerProfile = await
-        updateOwner(ownerProfile.data);
-        // const tokenProfile = await
-        updateToken(tokenProfile.data.token);
-      } catch (error) {
-        updateError(error);
-      }
-    }
-    fetchData();
-  }, [cashtag]);
-
-  if (errorMsg && errorMsg.response.status === 404) {
+  if (error && error.response.status === 404) {
     return (
       <div className="error">
         <Heading>Airdrop Not found</Heading>
@@ -67,7 +55,7 @@ export default function Claim() {
         </Link>
       </div>
     );
-  } else if (!airdropDetail || !owner || !token) {
+  } else if (loading) {
     return <Loading />;
   }
   return (
@@ -76,7 +64,7 @@ export default function Claim() {
       style={{ maxWidth: "650px", margin: "10px auto" }}
     >
       <p className="panel-heading">
-        Air Drop of Total {airdropDetail.amount / 10000} {token.symbol}
+        Air Drop of Total {data.detail.amount / 10000} {data.token.symbol}
       </p>
       <div className="panel-body" style={{ padding: "10px" }}>
         <Heading subtitle renderAs="p">
@@ -84,18 +72,24 @@ export default function Claim() {
         </Heading>
         <div className="user-card">
           <div className="avatar is-flex is-horizontal-center">
-            <Avatar size={128} location={owner.avatar} />
+            <Avatar size={128} location={data.owner.avatar} />
           </div>
-          <Heading size={5}>{owner.nickname || owner.username}</Heading>
+          <Heading size={5}>
+            {data.owner.nickname || data.owner.username}
+          </Heading>
         </div>
-        <MyClaim cashtag={cashtag} token={token} style={{ margin: "10px" }} />
+        <MyClaim
+          cashtag={cashtag}
+          token={data.token}
+          style={{ margin: "10px" }}
+        />
         <div
           className="panel is-info"
           style={{ maxWidth: "600px", margin: "10px auto" }}
         >
           <p className="panel-heading">Records of Claim</p>
-          <ClaimStat airdropDetail={airdropDetail} />
-          <ClaimLogs claimLogs={airdropDetail.claimLogs} token={token} />
+          <ClaimStat {...data.detail} />
+          <ClaimLogs cashtag={cashtag} token={data.token} />
         </div>
       </div>
     </Container>
@@ -153,9 +147,7 @@ function MyClaim({ cashtag, token }) {
   }
 }
 
-function ClaimStat({ airdropDetail }) {
-  const claimed = airdropDetail.claimLogs.length;
-  const quantity = airdropDetail.quantity;
+function ClaimStat({ claimed, quantity }) {
   const remain = quantity - claimed;
   return (
     <p className="panel-block">
