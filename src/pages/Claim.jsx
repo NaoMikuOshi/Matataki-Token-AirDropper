@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./claim.scss";
+import { useStore } from "../store";
 import { useRequest } from "ahooks";
 import { useParams, Link } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
@@ -105,7 +106,8 @@ function MyClaim({ cashtag, token }) {
   const { data, loading } = useRequest(() => checkIsClaimed(cashtag));
   const [claimResult, updateClaimResult] = useState(null);
   const isClaimed = data && data.isClaimed;
-
+  const store = useStore();
+  const isLogined = Boolean(store.get("accessToken"));
   const claimButtonText = (() =>
     loading
       ? "Checking with server..."
@@ -145,17 +147,27 @@ function MyClaim({ cashtag, token }) {
       </div>
     );
   } else {
-    return (
-      <div className="actions">
-        <Button
-          className="is-rounded is-primary"
-          onClick={(e) => clickToClaim()}
-          disabled={isClaimed || isSendingClaim}
-        >
-          {claimButtonText}
-        </Button>
-      </div>
-    );
+    if (isLogined) {
+      return (
+        <div className="actions">
+          <Button
+            className="is-rounded is-primary"
+            onClick={(e) => clickToClaim()}
+            disabled={isClaimed || isSendingClaim}
+          >
+            {claimButtonText}
+          </Button>
+        </div>
+      );
+    } else {
+      return (
+        <div className="actions">
+          <Link to="/login">
+            <Button className="is-rounded is-primary">Login to continue</Button>
+          </Link>
+        </div>
+      );
+    }
   }
 }
 

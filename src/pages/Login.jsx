@@ -39,7 +39,7 @@ export default function Login() {
               setError(result);
             } else {
               store.set("accessToken")(result.data);
-              router.push("/");
+              router.goBack();
             }
             setSubmitting(false);
           });
