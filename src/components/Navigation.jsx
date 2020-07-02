@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar } from "react-bulma-components";
-
+import { Link } from "react-router-dom";
 import { useStore } from "../store";
 import { removeCookie } from "../utils/cookie";
 import Avatar from "./Avatar";
@@ -24,7 +24,7 @@ function UserStatusNavItems() {
     ];
   } else {
     return [
-      <Navbar.Item key="action" href="/login">
+      <Navbar.Item key="action" renderAs={Link} to="/login">
         Sign In
       </Navbar.Item>,
     ];
@@ -35,15 +35,19 @@ export default function Navigation() {
   return (
     <Navbar fixed="top" active={false} transparent={false}>
       <Navbar.Brand>
-        <Navbar.Item renderAs="a" href="/">
+        <Navbar.Item renderAs={Link} to="/">
           Matataki AirDropper
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
       <Navbar.Menu>
         <Navbar.Container>
-          <Navbar.Item href="/send">Send</Navbar.Item>
-          <Navbar.Item href="/claim">Redeem</Navbar.Item>
+          <Navbar.Item renderAs={Link} to="/send">
+            Send
+          </Navbar.Item>
+          <Navbar.Item renderAs={Link} to="/claim">
+            Redeem
+          </Navbar.Item>
         </Navbar.Container>
         <Navbar.Container position="end">
           {UserStatusNavItems()}
