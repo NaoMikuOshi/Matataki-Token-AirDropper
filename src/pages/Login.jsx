@@ -16,6 +16,10 @@ export default function Login() {
     code: 0,
   });
 
+  if (store.get("accessToken")) {
+    router.replace(from);
+  }
+
   return (
     <Container className="send">
       <Formik
