@@ -22,50 +22,55 @@ export default function Send() {
   if (result) {
     return <AirDropResult result={result} />;
   }
+
+  const formInitialValues = {
+    title: "",
+    quantity: "",
+    amount: "",
+    split: "equal",
+    tokenId: "",
+  };
+
+  const formValidate = (values) => {
+    const numberRegex = /^\d+(\.\d{1,4})?$/;
+    const errors = {};
+    if (!values.title) {
+      errors.title = "Required";
+    } else if (isNaN(values.quantity)) {
+      errors.quantity = "Invalid quantity";
+    } else if (values.amount === "0") {
+      errors.amount = "Amount can not be 0";
+    } else if (isNaN(values.amount) || !numberRegex.test(values.amount)) {
+      errors.amount = "Invalid total amount. 4 digits max.";
+    } else if (isNaN(values.tokenId)) {
+      errors.tokenId = "Invalid TokenID";
+    }
+    return errors;
+  };
+
+  const requestToSendoutAirdrop = async (values, { setSubmitting }) => {
+    const decimal = 4;
+    const tokenUnit = 10 ** decimal;
+    const result = await createAirdrop(
+      values.title,
+      parseInt(values.tokenId),
+      Number(values.amount) * tokenUnit,
+      parseInt(values.quantity),
+      values.split
+    );
+    updateAirdrop(result);
+    console.log(result);
+    setSubmitting(false);
+  };
+
   return (
     <div className="send">
       <Container>
         <h1 className="title">Send Airdrop</h1>
         <Formik
-          initialValues={{
-            title: "",
-            quantity: "",
-            amount: "",
-            split: "equal",
-            tokenId: "",
-          }}
-          validate={(values) => {
-            const numberRegex = /^\d+(\.\d{1,4})?$/;
-            const errors = {};
-            if (!values.title) {
-              errors.title = "Required";
-            } else if (isNaN(values.quantity)) {
-              errors.quantity = "Invalid quantity";
-            } else if (values.amount === "0") {
-              errors.amount = "Amount can not be 0";
-            } else if (
-              isNaN(values.amount) ||
-              !numberRegex.test(values.amount)
-            ) {
-              errors.amount = "Invalid total amount. 4 digits max.";
-            } else if (isNaN(values.tokenId)) {
-              errors.tokenId = "Invalid TokenID";
-            }
-            return errors;
-          }}
-          onSubmit={async (values, { setSubmitting }) => {
-            const decimal = 4;
-            const result = await createAirdrop(
-              values.title,
-              parseInt(values.tokenId),
-              Number(values.amount) * 10 ** decimal,
-              parseInt(values.quantity),
-              values.split
-            );
-            updateAirdrop(result);
-            console.log(result);
-            setSubmitting(false);
-          }}
+          initialValues={formInitialValues}
+          validate={formValidate}
+          onSubmit={requestToSendoutAirdrop}
         >
           {({
             values,
@@ -143,27 +148,6 @@ export default function Send() {
                     </Control>
                   </Field>
                 </Columns.Column>
-                <Columns.Column>
-                  <Field>
-                    <Label>How much in Total?</Label>
-                    <Control>
-                      <Input
-                        placeholder="Total Amount"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.amount}
-                        name="amount"
-                      />
-                      {errors.amount && touched.amount && (
-                        <Notification color="danger">
-                          {errors.amount}
-                        </Notification>
-                      )}
-                    </Control>
-                  </Field>
-                </Columns.Column>
-              </Columns>
-              <Columns>
                 <Columns.Column>
                   <Field>
                     <Label>How much in Total?</Label>
