@@ -18,6 +18,7 @@ import { getCookie } from "./utils/cookie";
 import Navigation from "./components/Navigation";
 import FooterEffect from "./components/FooterEffect";
 import "./index.css";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default function App() {
   const store = useStore();
@@ -39,10 +40,12 @@ export default function App() {
           {/* <Route path="/about">
             <About />
           </Route> */}
-          <Route path="/send" children={<Send />} />
+          <PrivateRoute path="/send">
+            <Send />
+          </PrivateRoute>
           <Route path="/login" children={<Login />} />
           <Route path="/claim/$:cashtag" children={<Claim />} />
-          <Route path="/claim/" children={<ClaimWithCashtag />} />
+          <PrivateRoute path="/claim/" children={<ClaimWithCashtag />} />
           <Route path="/">
             <Home />
           </Route>

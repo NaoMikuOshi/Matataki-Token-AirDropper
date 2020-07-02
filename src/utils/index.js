@@ -1,4 +1,4 @@
-export function getAvatarUrl(location) {
+export function getUrlOfMatatakiCdn(location) {
   const imageCDNServer = process.env.REACT_APP_MTTK_IMG_CDN;
   return `${imageCDNServer}${location}`;
 }
