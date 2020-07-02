@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useStore } from "../store";
 import { Formik } from "formik";
 import { Container, Notification, Form, Button } from "react-bulma-components";
@@ -10,9 +10,12 @@ const { Field, Control, Label, Input } = Form;
 export default function Login() {
   const store = useStore();
   const router = useHistory();
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
   const [errorMsg, setError] = useState({
     code: 0,
   });
+
   return (
     <Container className="send">
       <Formik
@@ -41,7 +44,8 @@ export default function Login() {
               setError(result);
             } else {
               store.set("accessToken")(result.data);
-              router.goBack();
+              // router.goBack();
+              router.replace(from);
             }
             setSubmitting(false);
           });
@@ -61,7 +65,10 @@ export default function Login() {
             className="panel is-primary"
             style={{ maxWidth: "600px", margin: "0 auto" }}
           >
-            <p className="panel-heading">Login with Matataki Account</p>
+            <p className="panel-heading">
+              Login with Matataki Account
+              {from.pathname !== "/" && " to continue"}
+            </p>
             <div className="panel-block">
               <form onSubmit={handleSubmit} style={{ width: "100%" }}>
                 <Field>
