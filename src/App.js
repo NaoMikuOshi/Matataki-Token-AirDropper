@@ -45,7 +45,7 @@ export default function App() {
           </PrivateRoute>
           <Route path="/login" children={<Login />} />
           <Route path="/claim/$:cashtag" children={<Claim />} />
-          <Route path="/claim/" children={<ClaimWithCashtag />} />
+          <PrivateRoute path="/claim/" children={<ClaimWithCashtag />} />
           <Route path="/">
             <Home />
           </Route>
