@@ -20,11 +20,13 @@ export default function Login() {
         validate={(values) => {
           const errors = {};
           if (!values.email) {
-            errors.email = "Required";
+            errors.email = "Email Required";
           } else if (
             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
           ) {
             errors.email = "Invalid email address";
+          } else if (!values.password) {
+            errors.password = "Password Required";
           }
           return errors;
         }}
@@ -39,7 +41,7 @@ export default function Login() {
               setError(result);
             } else {
               store.set("accessToken")(result.data);
-              router.push("/");
+              router.goBack();
             }
             setSubmitting(false);
           });
@@ -66,7 +68,7 @@ export default function Login() {
                   <Label>Email</Label>
                   <Control>
                     <Input
-                      placeholder="Email address"
+                      placeholder="Your Matataki account's Email address"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.email}
@@ -82,7 +84,7 @@ export default function Login() {
                   <Label>Password</Label>
                   <Control>
                     <Input
-                      placeholder="Email address"
+                      placeholder="Your Matataki account password"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.password}
