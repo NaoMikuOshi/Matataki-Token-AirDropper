@@ -42,12 +42,11 @@ export default function Login() {
             console.log(result);
             if (result.code !== 0) {
               setError(result);
+              setSubmitting(false);
             } else {
               store.set("accessToken")(result.data);
-              // router.goBack();
               router.replace(from);
             }
-            setSubmitting(false);
           });
         }}
       >
