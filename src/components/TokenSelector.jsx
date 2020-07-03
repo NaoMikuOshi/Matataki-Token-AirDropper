@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useRequest } from "ahooks";
 import { Dropdown } from "react-bulma-components";
 import { getTokenList } from "../api/token";
-import { setCookie } from "../utils/cookie";
 
 function TokenSelector({ onChange, ...props }) {
   const { data, error, loading } = useRequest(() => getTokenList());
