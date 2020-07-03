@@ -56,6 +56,12 @@ export default function Navigation() {
               Redeem
             </Navbar.Item>
           )}
+          <Navbar.Item
+            href={`${process.env.REACT_APP_FE_REPO}/issues`}
+            target="_blank"
+          >
+            Beta Feedback
+          </Navbar.Item>
         </Navbar.Container>
         <Navbar.Container position="end">
           {UserStatusNavItems()}
