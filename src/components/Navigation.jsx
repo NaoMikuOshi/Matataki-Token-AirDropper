@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar } from "react-bulma-components";
 import { Link } from "react-router-dom";
 import { useStore } from "../store";
@@ -17,7 +17,9 @@ function UserStatusNavItems() {
     return [
       <Navbar.Item key="user">
         <Avatar location={userInfo.avatar} size={28} />
-        {userInfo.nickname || userInfo.username}
+        <span className="username">
+          {userInfo.nickname || userInfo.username}
+        </span>
       </Navbar.Item>,
       <Navbar.Item key="action" onClick={() => logout()}>
         Logout
@@ -36,8 +38,20 @@ export default function Navigation() {
   const store = useStore();
   const isLogined = Boolean(store.get("accessToken"));
 
+  const [active, setActive] = useState(false);
+
+  let handleClick = () => {
+    console.log(active);
+    setActive({ active: !active });
+  };
+
   return (
-    <Navbar fixed="top" active={false} transparent={false}>
+    <Navbar
+      fixed="top"
+      active={active}
+      onClick={handleClick}
+      transparent={false}
+    >
       <Navbar.Brand>
         <Navbar.Item renderAs={Link} to="/">
           Matataki AirDropper
