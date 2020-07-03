@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./send.scss";
 import { Link } from "react-router-dom";
 import {
@@ -8,9 +8,9 @@ import {
   Notification,
   Columns,
 } from "react-bulma-components";
-import { Formik } from "formik";
+import { Formik, isInteger } from "formik";
 import { createAirdrop } from "../api/backend";
-import { useState } from "react";
+import TokenSelector from "../components/TokenSelector";
 import { getAirdropUrl } from "../utils";
 import Clipboard from "clipboard";
 const { Field, Control, Label, Input, Radio } = Form;
@@ -28,32 +28,40 @@ export default function Send() {
     quantity: "",
     amount: "",
     split: "equal",
-    tokenId: "",
+    token: null,
   };
 
   const formValidate = (values) => {
     const numberRegex = /^\d+(\.\d{1,4})?$/;
     const errors = {};
+    const isAmountOverflow = (token) =>
+      Number(values.amount) * 10 ** token.decimals > token.amount;
     if (!values.title) {
       errors.title = "Required";
-    } else if (isNaN(values.quantity)) {
+    } else if (!values.token) {
+      errors.token = "Please select a Token";
+    } else if (!values.quantity || isNaN(values.quantity)) {
       errors.quantity = "Invalid quantity";
+    } else if (Number(values.quantity) <= 0) {
+      errors.quantity = "Invalid quantity, quantity must be postive";
+    } else if (!isInteger(values.quantity)) {
+      errors.quantity = "Invalid quantity, quantity must be Integer";
     } else if (values.amount === "0") {
       errors.amount = "Amount can not be 0";
     } else if (isNaN(values.amount) || !numberRegex.test(values.amount)) {
       errors.amount = "Invalid total amount. 4 digits max.";
-    } else if (isNaN(values.tokenId)) {
-      errors.tokenId = "Invalid TokenID";
+    } else if (isAmountOverflow(values.token)) {
+      errors.amount = "Invalid total amount. You don't have so much token.";
     }
     return errors;
   };
 
   const requestToSendoutAirdrop = async (values, { setSubmitting }) => {
-    const decimal = 4;
+    const decimal = values.token.decimals;
     const tokenUnit = 10 ** decimal;
     const result = await createAirdrop(
       values.title,
-      parseInt(values.tokenId),
+      parseInt(values.token.token_id),
       Number(values.amount) * tokenUnit,
       parseInt(values.quantity),
       values.split
@@ -105,18 +113,12 @@ export default function Send() {
                 </Columns.Column>
                 <Columns.Column>
                   <Field>
-                    <Label>Token ID</Label>
+                    <Label>Which Token?</Label>
                     <Control>
-                      <Input
-                        placeholder="Matataki Token ID, pattern like: https://wwwtest.smartsignature.io/token/{tokenId}"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.tokenId}
-                        name="tokenId"
-                      />
-                      {errors.tokenId && touched.tokenId && (
+                      <TokenSelector onChange={handleChange} name="token" />
+                      {errors.token && (
                         <Notification color="danger">
-                          {errors.tokenId}
+                          {errors.token}
                         </Notification>
                       )}
                     </Control>
