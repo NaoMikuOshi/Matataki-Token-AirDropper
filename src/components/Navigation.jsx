@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useBoolean } from "ahooks";
 import { Navbar } from "react-bulma-components";
 import { Link } from "react-router-dom";
 import { useStore } from "../store";
@@ -38,18 +39,13 @@ export default function Navigation() {
   const store = useStore();
   const isLogined = Boolean(store.get("accessToken"));
 
-  const [active, setActive] = useState(false);
-
-  let handleClick = () => {
-    console.log(active);
-    setActive(!active);
-  };
+  const [active, { toggle }] = useBoolean(false);
 
   return (
     <Navbar
       fixed="top"
       active={active}
-      onClick={handleClick}
+      onClick={() => toggle()}
       transparent={false}
     >
       <Navbar.Brand>
