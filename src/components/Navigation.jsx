@@ -40,7 +40,7 @@ export default function Navigation() {
     <Navbar fixed="top" active={false} transparent={false}>
       <Navbar.Brand>
         <Navbar.Item renderAs={Link} to="/">
-          Matataki AirDropper
+          Matataki AirDropper <span style={{ fontSize: "12px" }}>Beta</span>
         </Navbar.Item>
         <Navbar.Burger />
       </Navbar.Brand>
