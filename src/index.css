@@ -18,6 +18,18 @@ code {
   padding-top: 10px;
 }
 
+.username {
+  margin-left: 1rem;
+}
+
+.log-avatar {
+  border-radius: 14px;
+}
+
+.avatar > figure > img {
+  border-radius: 64px;
+}
+
 .top {
   position: fixed;
   left: 0;
@@ -26,6 +38,11 @@ code {
 
 .send {
   margin-top: 20px;
+}
+
+.error {
+  margin-top: 10rem;
+  text-align: center;
 }
 
 #root {
@@ -48,6 +65,7 @@ code {
   padding-left: 0 !important;
   padding-bottom: 1.5rem !important;
   z-index: -99;
+  background-color: white;
 }
 
 .title.is-5 {
@@ -113,7 +131,15 @@ code {
 
 @media (max-width: 768px) {
   .waves {
-    height: 40px;
-    min-height: 40px;
+    height: 100px;
+    min-height: 100px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .username {
+    position: absolute;
+    top: 10px;
+    left: 2rem;
   }
 }
