@@ -42,7 +42,7 @@ export default function Navigation() {
 
   let handleClick = () => {
     console.log(active);
-    setActive({ active: !active });
+    setActive(!active);
   };
 
   return (
