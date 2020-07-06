@@ -121,3 +121,7 @@ export function getClaimLogs(cashtag) {
 export function checkIsClaimed(cashtag) {
   return client.get(`/airdrop/${cashtag}/isClaimed`);
 }
+
+export function getUserData(uid) {
+  return client.get(`/user/${uid}`);
+}
