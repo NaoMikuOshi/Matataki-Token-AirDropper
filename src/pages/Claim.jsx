@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./claim.scss";
 import { useStore } from "../store";
 import { useRequest } from "ahooks";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { Container, Heading, Button } from "react-bulma-components";
 import {
   getDetailOfAirdrop,
@@ -102,6 +102,7 @@ export default function Claim() {
 }
 
 function MyClaim({ cashtag, token }) {
+  let location = useLocation();
   const [isSendingClaim, updateLoading] = useState(false);
   const { data, loading } = useRequest(() => checkIsClaimed(cashtag));
   const [claimResult, updateClaimResult] = useState(null);
@@ -162,7 +163,12 @@ function MyClaim({ cashtag, token }) {
     } else {
       return (
         <div className="actions">
-          <Link to="/login">
+          <Link
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          >
             <Button className="is-rounded is-primary">Login to continue</Button>
           </Link>
         </div>
