@@ -235,7 +235,7 @@ function AirDropResult({ result }) {
         </Button>
       </div>
       <p>
-        <Link to={`/claim/$${result.cashtag}`}>
+        <Link to={`/claim/${result.cashtag}`}>
           <Button color="primary" className="is-rounded">
             Checkout the Airdrop
           </Button>

@@ -13,7 +13,7 @@ export default function ClaimWithCashtag() {
   }, [cashtag]);
   function goToClaimPage(e) {
     e.preventDefault();
-    history.push(`/claim/$${cashtag}`);
+    history.push(`/claim/${cashtag}`);
   }
 
   return (
