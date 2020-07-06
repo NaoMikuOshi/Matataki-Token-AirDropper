@@ -16,7 +16,7 @@ function UserStatusNavItems() {
   }
   if (userInfo.username) {
     return [
-      <Navbar.Item key="user">
+      <Navbar.Item key="user" renderAs={Link} to="/my">
         <Avatar location={userInfo.avatar} size={28} />
         <span className="username">
           {userInfo.nickname || userInfo.username}
