@@ -1,7 +1,7 @@
 import React from "react";
 import { uniq, map, compose } from "ramda";
 import { Link } from "react-router-dom";
-import { Table, Heading } from "react-bulma-components";
+import { Table, Panel } from "react-bulma-components";
 import { useStore } from "../store";
 import { useRequest } from "ahooks";
 import { getUserData } from "../api/backend";
@@ -50,14 +50,16 @@ export function MyAirdrop() {
     );
   }
   return (
-    <div
-      className="cashtag has-text-centered panel is-primary"
-      style={{ maxWidth: "650px", margin: "10px auto" }}
-    >
-      <p className="panel-heading">My page</p>
-      <Heading>AirDrop Event created by me</Heading>
-      <EventsList events={data.events} tokenProfile={data.tokenProfile} />
-    </div>
+    <Panel style={{ maxWidth: "650px", margin: "10px auto" }} color="primary">
+      <Panel.Header>My page</Panel.Header>
+      <Panel.Tabs className="panel-tabs">
+        <Panel.Tabs.Tab active>My AirDrop</Panel.Tabs.Tab>
+        <Panel.Tabs.Tab>My Claims</Panel.Tabs.Tab>
+      </Panel.Tabs>
+      <Panel.Block className="panel-block">
+        <EventsList events={data.events} tokenProfile={data.tokenProfile} />
+      </Panel.Block>
+    </Panel>
   );
 }
 
