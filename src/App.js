@@ -19,7 +19,7 @@ import Navigation from "./components/Navigation";
 import FooterEffect from "./components/FooterEffect";
 import "./index.css";
 import PrivateRoute from "./components/PrivateRoute";
-import { MyAirdrop } from "./pages/MyAirdrop";
+import { MyPage } from "./pages/MyPage";
 
 export default function App() {
   const store = useStore();
@@ -48,7 +48,7 @@ export default function App() {
           <Route path="/claim/$:cashtag" children={<Claim />} />
           <Route path="/claim/:cashtag" children={<Claim />} />
           <PrivateRoute path="/claim" children={<ClaimWithCashtag />} />
-          <PrivateRoute path="/my" children={<MyAirdrop />} />
+          <PrivateRoute path="/my" children={<MyPage />} />
           <Route path="/">
             <Home />
           </Route>

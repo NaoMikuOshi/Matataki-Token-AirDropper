@@ -7,7 +7,7 @@ import { useRequest } from "ahooks";
 import { getUserData } from "../api/backend";
 import { getTokenProfile } from "../api/token";
 
-export function MyAirdrop() {
+export function MyPage() {
   const store = useStore();
   const { id } = store.get("atData");
   async function fetchData() {
