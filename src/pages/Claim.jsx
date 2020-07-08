@@ -83,9 +83,10 @@ export default function Claim() {
             {data.owner.nickname || data.owner.username}
           </Heading>
         </div>
-        <MyClaim
+        <ClaimControl
           cashtag={cashtag}
           token={data.token}
+          airdropDetail={data.detail}
           style={{ margin: "10px" }}
         />
         <div
@@ -101,7 +102,7 @@ export default function Claim() {
   );
 }
 
-function MyClaim({ cashtag, token }) {
+function ClaimControl({ cashtag, token, airdropDetail }) {
   let location = useLocation();
   const [isSendingClaim, updateLoading] = useState(false);
   const { data, loading } = useRequest(() => checkIsClaimed(cashtag));
@@ -109,11 +110,14 @@ function MyClaim({ cashtag, token }) {
   const isClaimed = data && data.isClaimed;
   const store = useStore();
   const isLogined = Boolean(store.get("accessToken"));
+  const isFinished = airdropDetail.quantity <= airdropDetail.claimed;
   const claimButtonText = (() =>
     loading
       ? "Checking with server..."
       : isClaimed
       ? "Claimed"
+      : isFinished
+      ? "Finished"
       : isSendingClaim
       ? "Sending request, hold on..."
       : "Claim")();
@@ -154,7 +158,7 @@ function MyClaim({ cashtag, token }) {
           <Button
             className="is-rounded is-primary"
             onClick={(e) => clickToClaim()}
-            disabled={isClaimed || isSendingClaim}
+            disabled={isClaimed || isSendingClaim || isFinished}
           >
             {claimButtonText}
           </Button>
