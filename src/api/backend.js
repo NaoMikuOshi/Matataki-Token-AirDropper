@@ -81,14 +81,16 @@ client.interceptors.response.use(
  * @param {number} amount 空投总量
  * @param {number} quantity 空投份额
  * @param {string} type 空投类型，只能是 'random' 或 'equal'
+ * @param {string} cashtag cashtag
  */
-export function createAirdrop(title, tokenId, amount, quantity, type) {
+export function createAirdrop(title, tokenId, amount, quantity, type, cashtag) {
   return client.post("/airdrop", {
     title,
     tokenId,
     amount,
     quantity,
     type,
+    cashtag,
   });
 }
 
