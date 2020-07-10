@@ -82,6 +82,9 @@ export default function Claim() {
           <Heading size={5}>
             {data.owner.nickname || data.owner.username}
           </Heading>
+          {data.detail.title && (
+            <p>And leave a message: “{data.detail.title}”</p>
+          )}
         </div>
         <ClaimControl
           cashtag={cashtag}
