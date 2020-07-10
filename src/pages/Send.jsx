@@ -28,6 +28,7 @@ export default function Send() {
     quantity: "",
     amount: "",
     split: "equal",
+    cashtag: "",
     token: null,
   };
 
@@ -38,6 +39,11 @@ export default function Send() {
       Number(values.amount) * 10 ** token.decimals > token.amount;
     if (!values.title) {
       errors.title = "Required";
+    } else if (
+      values.cashtag !== "" &&
+      !/^[a-zA-Z0-9]+$/.test(values.cashtag)
+    ) {
+      errors.cashtag = "Cashtag can not contain other than a-z, A-Z, or 0-9";
     } else if (!values.token) {
       errors.token = "Please select a Token";
     } else if (!values.quantity || isNaN(values.quantity)) {
@@ -59,12 +65,14 @@ export default function Send() {
   const requestToSendoutAirdrop = async (values, { setSubmitting }) => {
     const decimal = values.token.decimals;
     const tokenUnit = 10 ** decimal;
+    const cashtag = Boolean(values.cashtag) ? values.cashtag : undefined;
     const result = await createAirdrop(
       values.title,
       parseInt(values.token.token_id),
       Number(values.amount) * tokenUnit,
       parseInt(values.quantity),
-      values.split
+      values.split,
+      cashtag
     );
     updateAirdrop(result);
     console.log(result);
@@ -111,6 +119,27 @@ export default function Send() {
                     </Control>
                   </Field>
                 </Columns.Column>
+
+                <Columns.Column>
+                  <Field>
+                    <Label>Custom $Cashtag</Label>
+                    <Control>
+                      <Input
+                        placeholder="Custom your Cashtag, or just leave blank for random..."
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.cashtag}
+                        name="cashtag"
+                      />
+                      {errors.cashtag && touched.cashtag && (
+                        <Notification color="danger">
+                          {errors.cashtag}
+                        </Notification>
+                      )}
+                    </Control>
+                  </Field>
+                </Columns.Column>
+
                 <Columns.Column>
                   <Field>
                     <Label>Which Token?</Label>
@@ -125,6 +154,7 @@ export default function Send() {
                   </Field>
                 </Columns.Column>
               </Columns>
+
               <Columns>
                 <Columns.Column>
                   <Field>
@@ -196,6 +226,7 @@ export default function Send() {
                   </Field>
                 </Columns.Column>
               </Columns>
+
               <Button color="primary" disabled={isSubmitting}>
                 Submit
               </Button>
