@@ -3,15 +3,16 @@ import "./claim.scss";
 import { useStore } from "../store";
 import { useRequest } from "ahooks";
 import { useParams, Link, useLocation } from "react-router-dom";
-import { Container, Heading, Button } from "react-bulma-components";
+import { Container, Heading, Button, Loader } from "react-bulma-components";
 import {
   getDetailOfAirdrop,
   claimAirdrop,
   checkIsClaimed,
+  getClaimLogs,
 } from "../api/backend";
 import { getUserProfile } from "../api/user";
 import { getTokenProfile } from "../api/token";
-import { ClaimLogs } from "../components/ClaimLogs";
+import { ClaimLog } from "../components/ClaimLogs";
 import Avatar from "../components/Avatar";
 
 // const AIRDROP_TYPE = {
@@ -92,14 +93,11 @@ export default function Claim() {
           airdropDetail={data.detail}
           style={{ margin: "10px" }}
         />
-        <div
-          className="panel is-info"
-          style={{ maxWidth: "600px", margin: "10px auto" }}
-        >
-          <p className="panel-heading">Records of Claim</p>
-          <ClaimStat {...data.detail} />
-          <ClaimLogs cashtag={cashtag} token={data.token} />
-        </div>
+        <RecordsOfClaim
+          detail={data.detail}
+          cashtag={cashtag}
+          token={data.token}
+        />
       </div>
     </Container>
   );
@@ -184,20 +182,69 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
   }
 }
 
-function ClaimStat({ claimed, quantity }) {
-  const remain = quantity - claimed;
+function RecordsOfClaim({ detail, token, cashtag }) {
+  const style = {
+    panel: { maxWidth: "600px", margin: "10px auto" },
+    clickable: { cursor: "pointer" },
+    loader: {
+      width: 128,
+      height: 128,
+      border: "4px solid #3298dc",
+      borderTopColor: "transparent",
+      borderRightColor: "transparent",
+    },
+  };
+  const [lastUpdate, setLastUpdate] = useState("");
+  const afterSuccessUpdate = () => {
+    setLastUpdate(new Date().toLocaleTimeString());
+  };
+  const { data, error, loading, run } = useRequest(
+    () => getClaimLogs(cashtag),
+    {
+      // pollingWhenHidden: true,
+      pollingInterval: 1000 * 60,
+      onSuccess: afterSuccessUpdate,
+    }
+  );
+
+  if (error) {
+    return <div>Failed to History of Claimed</div>;
+  }
+  if (loading) {
+    return (
+      <div>
+        <Loader style={style.loader} />
+        Loading Claim Board...
+      </div>
+    );
+  }
   return (
-    <p className="panel-block">
-      Claimed:{" "}
-      <code>
-        {" "}
-        {claimed}/{quantity}{" "}
-      </code>
-      , Remain:{" "}
-      <code>
-        {" "}
-        {remain}/{quantity}{" "}
-      </code>
-    </p>
+    <div className="panel is-info" style={style.panel}>
+      <p className="panel-heading">
+        Records of Claim
+        <br />
+        <span style={{ fontSize: "12px" }}>
+          Update every minutes, last updated: {lastUpdate}{" "}
+          <i
+            class="fas fa-sync"
+            aria-label="refresh"
+            style={style.clickable}
+            onClick={() => run()}
+          ></i>
+        </span>
+      </p>
+      <p className="panel-block">
+        Claimed:{" "}
+        <code>
+          {" "}
+          {data.claimLogs.length}/{detail.quantity}{" "}
+        </code>
+      </p>
+      <div className="claim-logs">
+        {data.claimLogs.map((claimLog) => (
+          <ClaimLog key={claimLog.id} claimLog={claimLog} token={token} />
+        ))}
+      </div>
+    </div>
   );
 }
