@@ -222,15 +222,15 @@ function RecordsOfClaim({ detail, token, cashtag }) {
     <div className="panel is-info" style={style.panel}>
       <p className="panel-heading">
         Records of Claim
-        <i
-          class="fas fa-sync"
-          aria-label="refresh"
-          style={style.clickable}
-          onClick={() => run()}
-        ></i>
         <br />
         <span style={{ fontSize: "12px" }}>
-          Update every minutes, last updated: {lastUpdate}
+          Update every minutes, last updated: {lastUpdate}{" "}
+          <i
+            class="fas fa-sync"
+            aria-label="refresh"
+            style={style.clickable}
+            onClick={() => run()}
+          ></i>
         </span>
       </p>
       <p className="panel-block">
