@@ -218,9 +218,8 @@ export default function Send() {
                         checked={values.split === "random"}
                         value="random"
                         name="split"
-                        disabled
                       >
-                        Random
+                        Random (LuckyMoney Mode)
                       </Radio>
                     </Control>
                   </Field>
