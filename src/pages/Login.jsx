@@ -20,8 +20,12 @@ export default function Login() {
     router.replace(from);
   }
 
+  let style = {
+    marginTop: "1.5rem",
+  };
+
   return (
-    <Container className="send">
+    <Container className="send" style={style}>
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values) => {
