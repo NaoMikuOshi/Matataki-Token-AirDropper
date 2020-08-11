@@ -11,5 +11,5 @@ export function disassemble(token) {
 }
 
 export function getAirdropUrl(cashtag) {
-  return `${window.location.origin}/claim/$${cashtag}`;
+  return `${window.location.origin}/claim/${cashtag}`;
 }

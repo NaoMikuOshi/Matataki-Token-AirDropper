@@ -7,7 +7,7 @@ import { getClaimLogs } from "../api/backend";
 export function ClaimLogs({ cashtag, ...props }) {
   const { data, error, loading } = useRequest(() => getClaimLogs(cashtag), {
     // pollingWhenHidden: true,
-    // pollingInterval: 1000 * 10,
+    // pollingInterval: 1000 * 60,
   });
   if (error) {
     return <div className="claim-logs">Failed to History of Claimed</div>;
@@ -24,7 +24,7 @@ export function ClaimLogs({ cashtag, ...props }) {
   );
 }
 
-function ClaimLog({ claimLog, token }) {
+export function ClaimLog({ claimLog, token }) {
   const { data, error, loading } = useRequest(() =>
     getUserProfile(claimLog.uid)
   );
@@ -43,7 +43,7 @@ function ClaimLog({ claimLog, token }) {
         <span>
           {data.data.nickname} Got {claimLog.amount / 10000}
         </span>
-        <span>{token.symbol}</span>
+        <span> {token.symbol}</span>
       </div>
     </div>
   );
