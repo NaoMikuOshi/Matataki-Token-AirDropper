@@ -14,7 +14,6 @@ import TokenSelector from "../components/TokenSelector";
 import { getAirdropUrl } from "../utils";
 import Clipboard from "clipboard";
 const { Field, Control, Label, Input, Radio } = Form;
-
 new Clipboard(".copy-btn");
 
 export default function Send() {
@@ -73,9 +72,8 @@ export default function Send() {
       parseInt(values.quantity),
       values.split,
       cashtag
-    );
+    ).catch((e) => {});
     updateAirdrop(result);
-    console.log(result);
     setSubmitting(false);
   };
 
@@ -210,7 +208,7 @@ export default function Send() {
                         value="equal"
                         name="split"
                       >
-                        Equally
+                        <span>Equally</span>
                       </Radio>
                       <Radio
                         onChange={handleChange}
@@ -219,7 +217,7 @@ export default function Send() {
                         value="random"
                         name="split"
                       >
-                        Random (LuckyMoney Mode)
+                        <span>Random (LuckyMoney Mode)</span>
                       </Radio>
                     </Control>
                   </Field>
@@ -237,9 +235,13 @@ export default function Send() {
   );
 }
 
+let style = {
+  marginTop: "5rem",
+};
+
 function AirDropResult({ result }) {
   return (
-    <Container className="airdrop-result">
+    <Container className="airdrop-result" style={style}>
       <h1 className="title">Your just launched Token Airdrop</h1>
       <h2 className="subtitle">Your airdrop $cashtag is: ${result.cashtag}</h2>
       <p>
