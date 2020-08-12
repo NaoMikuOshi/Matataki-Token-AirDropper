@@ -20,8 +20,16 @@ export default function Login() {
     router.replace(from);
   }
 
+  let small = {
+    marginTop: "0.5rem",
+  };
+
+  let mid = {
+    marginTop: "1.5rem",
+  };
+
   return (
-    <Container className="send">
+    <Container className="send" style={mid}>
       <Formik
         initialValues={{ email: "", password: "" }}
         validate={(values) => {
@@ -119,8 +127,18 @@ export default function Login() {
                   color="primary"
                   className="is-fullwidth"
                   disabled={isSubmitting}
+                  onClick={handleSubmit}
                 >
                   Login
+                </Button>
+                <Button
+                  color="primary"
+                  style={small}
+                  className="is-fullwidth"
+                  disabled={isSubmitting}
+                  onClick={() => (window.location = "https://matataki.io")}
+                >
+                  Register
                 </Button>
               </form>
             </div>
