@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Panel, Button, Heading } from "react-bulma-components";
-import { getDetailOfAirdrop } from "../api/backend";
+import { getDetailOfAirdrop, stopAirdrop } from "../api/backend";
 import { getUserProfile } from "../api/user";
 import { getTokenProfile } from "../api/token";
 
@@ -43,6 +43,13 @@ function StopAirdropPage() {
     fetch();
   }, [cashtag]);
   const loading = !detail || !owner || !token;
+
+  const [stopResult, updateStop] = useState(null);
+  async function stopTheAirdrop() {
+    const result = await stopAirdrop(cashtag);
+    updateStop(result);
+  }
+
   if (loading) {
     return <Loading />;
   } else if (err && err.response.status === 404) {
@@ -58,6 +65,12 @@ function StopAirdropPage() {
       </div>
     );
   } else {
+    if (detail.status !== "active") {
+      return <EventAlreadyStopped />;
+    }
+    if (stopResult) {
+      return <StopSuccessfully />;
+    }
     return (
       <Panel
         style={{ maxWidth: "720px", margin: "10px auto" }}
@@ -74,13 +87,46 @@ function StopAirdropPage() {
             </h1>
             <h3 className="subtitle is-4">if you STOP this airdrop.</h3>
           </div>
-          <button className="button is-danger">
+          <button className="button is-danger" onClick={() => stopTheAirdrop()}>
             STOP and Get the money BACK
           </button>
+          {stopResult && JSON.stringify(stopResult)}
         </div>
       </Panel>
     );
   }
+}
+
+function EventAlreadyStopped() {
+  return (
+    <div className="error">
+      <p className="description">
+        Sorry, but this airdop was stopped/finished already.
+      </p>
+      <button className="button" onClick={() => window.close()}>
+        {" "}
+        Close{" "}
+      </button>
+    </div>
+  );
+}
+
+function StopSuccessfully() {
+  return (
+    <div className="success has-text-centered">
+      <h1 className="title">Airdrop was stopped successfully</h1>
+      <p className="description">
+        the remain part will be refund to your matataki account.
+        <br />
+        It may takes up to 30 minutes to arrive at your account, so please wait
+        in patient.
+      </p>
+      <button className="button" onClick={() => window.close()}>
+        {" "}
+        Close{" "}
+      </button>
+    </div>
+  );
 }
 
 export default StopAirdropPage;

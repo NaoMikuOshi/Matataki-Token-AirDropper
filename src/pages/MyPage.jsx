@@ -189,7 +189,7 @@ function Event({ event, token }) {
         <span className="status">{event.status}</span>
         {event.status === "active" && (
           <span className="btn">
-            <Link to={`/claim/${event.cashtag}/stop`} target="_blank">
+            <Link to={`/stop/${event.cashtag}`} target="_blank">
               <button class="button">STOP</button>
             </Link>
           </span>
