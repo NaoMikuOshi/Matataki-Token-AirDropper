@@ -51,7 +51,7 @@ export function MyPage() {
     );
   }
   return (
-    <Panel style={{ maxWidth: "650px", margin: "10px auto" }} color="primary">
+    <Panel style={{ maxWidth: "720px", margin: "10px auto" }} color="primary">
       <Panel.Header>My page</Panel.Header>
       <Panel.Tabs className="panel-tabs">
         <Panel.Tabs.Tab
@@ -142,6 +142,7 @@ function EventsList({ events, tokenProfile }) {
             <th>Qty</th>
             <th>Total Amount</th>
             <th>Created At</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tfoot>
@@ -152,6 +153,7 @@ function EventsList({ events, tokenProfile }) {
             <th>Qty</th>
             <th>Total Amount</th>
             <th>Created At</th>
+            <th>Status</th>
           </tr>
         </tfoot>
         <tbody>
@@ -183,6 +185,16 @@ function Event({ event, token }) {
         {event.amount / 10 ** token.decimals} {token.symbol}
       </td>
       <td>{new Date(event.created_at).toLocaleString()}</td>
+      <td>
+        <span className="status">{event.status}</span>
+        {event.status === "active" && (
+          <span className="btn">
+            <Link to={`/claim/${event.cashtag}/stop`} target="_blank">
+              <button class="button">STOP</button>
+            </Link>
+          </span>
+        )}
+      </td>
     </tr>
   );
 }

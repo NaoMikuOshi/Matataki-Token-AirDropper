@@ -13,6 +13,7 @@ import { useStore } from "./store";
 import Claim from "./pages/Claim";
 import Send from "./pages/Send";
 import Login from "./pages/Login";
+import ClaimStop from "./pages/StopAirdrop";
 import ClaimWithCashtag from "./pages/ClaimWithCashtag";
 import { getCookie } from "./utils/cookie";
 import Navigation from "./components/Navigation";
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="/login" children={<Login />} />
           <Route path="/claim/$:cashtag" children={<Claim />} />
           <Route path="/claim/:cashtag" children={<Claim />} />
+          <Route path="/stop/:cashtag" children={<ClaimStop />} />
           <PrivateRoute path="/claim" children={<ClaimWithCashtag />} />
           <PrivateRoute path="/my" children={<MyPage />} />
           <Route path="/">
