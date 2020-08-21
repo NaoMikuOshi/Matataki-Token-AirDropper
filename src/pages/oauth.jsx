@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useMount } from "ahooks";
 import { useHistory } from "react-router-dom";
 import { useQuery } from "../hooks/useQuery";
 import { useStore } from "../store";
@@ -10,12 +11,12 @@ function HandleLoginOAuthCallback() {
 
   const accessToken = query.get("token");
 
-  useEffect(() => {
+  useMount(() => {
+    console.log("mounted", accessToken);
     if (!accessToken) return;
     store.set("accessToken")(accessToken);
-    console.log("set at");
     router.replace("/");
-  }, []);
+  });
   if (!accessToken) {
     return (
       <div className="msg">
