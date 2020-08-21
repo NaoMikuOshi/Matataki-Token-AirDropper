@@ -123,6 +123,16 @@ export default function Login() {
                   </Notification>
                 )}
                 <Button
+                  type="button"
+                  color="primary"
+                  className="is-fullwidth"
+                  onClick={() =>
+                    (window.location = process.env.REACT_APP_OAuthUrl)
+                  }
+                >
+                  One-Click Login / 一键登录
+                </Button>
+                <Button
                   type="submit"
                   color="primary"
                   className="is-fullwidth"
