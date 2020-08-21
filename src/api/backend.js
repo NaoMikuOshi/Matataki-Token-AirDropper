@@ -116,6 +116,14 @@ export function claimAirdrop(cashtag, memo = "") {
   return client.post(`/airdrop/${cashtag}`, { memo });
 }
 
+/**
+ * Stop Airdrop
+ * @param {string} cashtag The $Cashtag of the airdrop
+ */
+export function stopAirdrop(cashtag) {
+  return client.post(`/airdrop/${cashtag}/stop`);
+}
+
 export function getClaimLogs(cashtag) {
   return client.get(`/claim/${cashtag}`);
 }
