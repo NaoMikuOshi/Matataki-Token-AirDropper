@@ -10,12 +10,15 @@ function HandleLoginOAuthCallback() {
   const router = useHistory();
 
   const accessToken = query.get("token");
+  const toPath = query.get("path")
+    ? decodeURIComponent(query.get("path"))
+    : "/";
 
   useMount(() => {
     console.log("mounted", accessToken);
     if (!accessToken) return;
     store.set("accessToken")(accessToken);
-    router.replace("/");
+    router.replace(toPath);
   });
   if (!accessToken) {
     return (
@@ -28,7 +31,7 @@ function HandleLoginOAuthCallback() {
   }
   return (
     <div className="msg">
-      <p>Handling callback now, please wait.</p>
+      <p>Redirecting to {toPath}, please wait.</p>
     </div>
   );
 }
