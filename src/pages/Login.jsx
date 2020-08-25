@@ -4,6 +4,7 @@ import { useStore } from "../store";
 import { Formik } from "formik";
 import { Container, Notification, Form, Button } from "react-bulma-components";
 import { loginWithEmail } from "../api/user";
+import { setOAuthRedirectUri } from "../api/developer";
 
 const { Field, Control, Label, Input } = Form;
 
@@ -26,6 +27,14 @@ export default function Login() {
 
   let mid = {
     marginTop: "1.5rem",
+  };
+
+  const jumpToMttkOAuth = async () => {
+    if (from.pathname !== "/") {
+      const result = await setOAuthRedirectUri(from.pathname);
+      console.log("set redirect uri result:", result.data);
+    }
+    window.location = process.env.REACT_APP_OAuthUrl;
   };
 
   return (
@@ -126,9 +135,7 @@ export default function Login() {
                   type="button"
                   color="primary"
                   className="is-fullwidth"
-                  onClick={() =>
-                    (window.location = process.env.REACT_APP_OAuthUrl)
-                  }
+                  onClick={jumpToMttkOAuth}
                 >
                   One-Click Login / 一键登录
                 </Button>
