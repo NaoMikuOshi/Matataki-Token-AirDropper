@@ -111,14 +111,16 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
   const isClaimed = data && data.isClaimed;
   const store = useStore();
   const isLogined = Boolean(store.get("accessToken"));
-  const isFinished = airdropDetail.quantity <= airdropDetail.claimed;
+  const isFinished =
+    airdropDetail.quantity <= airdropDetail.claimed ||
+    airdropDetail.status === "stopped";
   const claimButtonText = (() =>
     loading
       ? "Checking with server..."
-      : isClaimed
-      ? "Claimed"
       : isFinished
       ? "Finished"
+      : isClaimed
+      ? "Claimed"
       : isSendingClaim
       ? "Sending request, hold on..."
       : "Claim")();
@@ -158,7 +160,7 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
         <div className="actions">
           <Button
             className="is-rounded is-primary"
-            onClick={(e) => clickToClaim()}
+            onClick={() => clickToClaim()}
             disabled={isClaimed || isSendingClaim || isFinished}
           >
             {claimButtonText}
