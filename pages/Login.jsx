@@ -53,7 +53,7 @@ export default function Login({ user }) {
         <meta property='og:tyle' content='article' />,
         <meta property='og:url' content='www.baidu.com' />,
         <meta property='og:image' content={user} />,
-        <meta property='og:site_name' content='12342234' />,
+        <meta property='og:site_name' content={user} />,
       </Head>
       <Navigation />
       <Container className="send" style={mid}>
