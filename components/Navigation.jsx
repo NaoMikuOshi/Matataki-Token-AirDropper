@@ -1,18 +1,18 @@
 import React from "react";
 import { useBoolean } from "ahooks";
 import { Navbar } from "react-bulma-components";
-import { Link } from "react-router-dom";
-import { useStore } from "../store";
+import { Link } from "next/link"//"react-router-dom";
+// import { useStore } from "../store";
 import { removeCookie } from "../utils/cookie";
 import Avatar from "./Avatar";
 
 function UserStatusNavItems() {
-  const store = useStore();
-  const userInfo = store.get("userInfo");
+  // const store = useStore();
+  const userInfo = {};//store.get("userInfo");
   function logout() {
     removeCookie("ACCESS_TOKEN");
-    store.set("userInfo")({});
-    store.set("accessToken")("");
+    // store.set("userInfo")({});
+    // store.set("accessToken")("");
   }
   if (userInfo.username) {
     return [
@@ -36,8 +36,8 @@ function UserStatusNavItems() {
 }
 
 export default function Navigation() {
-  const store = useStore();
-  const isLogined = Boolean(store.get("accessToken"));
+  // const store = useStore();
+  const isLogined = false;//Boolean(store.get("accessToken"));
 
   const [active, { toggle }] = useBoolean(false);
 

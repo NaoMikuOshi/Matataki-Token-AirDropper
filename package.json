@@ -14,6 +14,7 @@
     "husky": "^4.2.5",
     "js-cookie": "^2.2.1",
     "lint-staged": "^10.2.11",
+    "next": "^10.0.1",
     "prettier": "^2.0.5",
     "ramda": "^0.27.0",
     "react": "^16.13.1",
@@ -24,10 +25,10 @@
     "undux": "^5.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export"
   },
   "eslintConfig": {
     "extends": "react-app"
