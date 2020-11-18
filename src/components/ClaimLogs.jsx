@@ -47,9 +47,9 @@ export function ClaimLog({ claimLog, token }) {
       </div>
       <div class="logs">
         <a
-          onClick={() =>
-            (window.location = "https://matataki.io/user/" + claimLog.uid)
-          }
+          href={`https://matataki.io/user/${claimLog.uid}`}
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {data.data.nickname}
         </a>
