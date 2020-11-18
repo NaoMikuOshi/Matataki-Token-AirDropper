@@ -37,6 +37,26 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `yarn dev`
+
+Run `build` script and `server:dev` script.
+
+Build the app for production to the `build` folder and start development Express.js server.
+
+### `yarn server`
+
+Run `build` script and `server:prod` script.
+
+Build the app for production to the `build` folder and start production Express.js server.
+
+### `yarn server:dev`
+
+Set `NODE_ENV` is `development` and start Express.js server.
+
+### `yarn server:prod`
+
+Set `NODE_ENV` is `production` and start Express.js server.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
