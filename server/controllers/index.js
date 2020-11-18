@@ -1,11 +1,11 @@
 import express from "express";
 import path from "path";
-import changeMetaTokenLogo from "../middleware/tokenLogo"
+import changeMetaInfo from "../middleware/changeMetaInfo"
 
 const router = express.Router();
 
 const actionIndex = async (req, res, next) => {
-  changeMetaTokenLogo(req, res, next);
+  changeMetaInfo(req, res, next);
 };
 
 router.use('^/$', actionIndex);
