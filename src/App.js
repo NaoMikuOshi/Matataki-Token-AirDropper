@@ -1,14 +1,7 @@
 import React, { useEffect } from "react";
 import "react-bulma-components/dist/react-bulma-components.min.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import {
-  Button,
-  Footer,
-  Content,
-  Hero,
-  Container,
-  Heading,
-} from "react-bulma-components";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Footer, Content } from "react-bulma-components";
 import { useStore } from "./store";
 import Claim from "./pages/Claim";
 import Send from "./pages/Send";
@@ -19,9 +12,10 @@ import ClaimWithCashtag from "./pages/ClaimWithCashtag";
 import { getCookie } from "./utils/cookie";
 import Navigation from "./components/Navigation";
 import FooterEffect from "./components/FooterEffect";
-import "./index.css";
 import PrivateRoute from "./components/PrivateRoute";
 import { MyPage } from "./pages/MyPage";
+import Home from "./pages/Home";
+import "./index.css";
 
 export default function App() {
   const store = useStore();
@@ -83,65 +77,5 @@ export default function App() {
         </Footer>
       </div>
     </Router>
-  );
-}
-
-function Home() {
-  const store = useStore();
-  const userInfo = store.get("userInfo");
-  return (
-    <div>
-      <div className="top">
-        <Hero color="primary" gradient>
-          <Hero.Body>
-            <Container>
-              <Heading>Matataki Token AirDropper</Heading>
-              <Heading subtitle size={3}>
-                A simple app to airdrop your <strong>Matataki Token</strong>
-              </Heading>
-              <Heading subtitle size={4}>
-                Share to anywhere with the magical link.
-              </Heading>
-
-              {userInfo.username ? (
-                <div className="action-buttons">
-                  <Link to="/send">
-                    <Button
-                      color="primary"
-                      rounded={true}
-                      style={{ margin: "5px" }}
-                    >
-                      Send
-                    </Button>
-                  </Link>
-                  <Link to="/claim">
-                    <Button
-                      color="light"
-                      rounded={true}
-                      style={{ margin: "5px" }}
-                    >
-                      Redeem
-                    </Button>
-                  </Link>
-                </div>
-              ) : (
-                <Link to="/login">
-                  <Button
-                    color="light"
-                    rounded={true}
-                    style={{ margin: "5px" }}
-                  >
-                    Login to continue
-                  </Button>
-                </Link>
-              )}
-            </Container>
-          </Hero.Body>
-        </Hero>
-      </div>
-      <section className="section">
-        <Container></Container>
-      </section>
-    </div>
   );
 }
