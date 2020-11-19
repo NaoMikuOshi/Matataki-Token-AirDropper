@@ -21,9 +21,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:dev": "dotenv -e .env -e .env.development react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "npm-run-all --parallel build server:dev",
+    "dev": "npm-run-all --parallel build:dev server:dev",
     "server": "npm-run-all --parallel build server:prod",
     "server:dev": "cross-env NODE_ENV=development nodemon --inspect ./server/bootstrap.js",
     "server:prod": "cross-env NODE_ENV=production nodemon --inspect ./server/bootstrap.js"
@@ -63,6 +64,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "cross-env": "^7.0.2",
+    "dotenv-cli": "^4.0.0",
     "dotenv-flow": "^3.2.0",
     "husky": "^4.2.5",
     "ignore-styles": "^5.0.1",

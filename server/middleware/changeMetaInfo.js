@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { getDetailOfAirdrop } from "../../src/api/backend";
+import { getUserProfile } from '../../src/api/user';
 import { getTokenProfile } from '../../src/api/token';
 
 export default async function changeMetaInfo(req, res, next) {
@@ -20,11 +21,19 @@ export default async function changeMetaInfo(req, res, next) {
       const detail = await getDetailOfAirdrop(cashtag);
       console.log('Middleware::changeMetaInfo:getDetailOfAirdrop detail:', detail);
 
-      const tokenProfile = await getTokenProfile(detail.token_id);
+      const [ownerProfile, tokenProfile] = await Promise.all([
+        getUserProfile(detail.owner),
+        getTokenProfile(detail.token_id),
+      ]);
+
+      const ownerInfo = ownerProfile.data;
+      console.log('Middleware::changeMetaInfo:getUserProfile ownerInfo:', ownerInfo);
+
+      // const tokenProfile = await getTokenProfile(detail.token_id);
       const tokenInfo = tokenProfile.data;
       console.log('Middleware::changeMetaInfo:getTokenProfile tokenInfo:', tokenInfo);
 
-      const metaDescString = `${tokenInfo.user.nickname || tokenInfo.user.username} is airdropping ${detail.amount / 10000} ${tokenInfo.token.symbol}! ${metaTitle} ${metaDesc.replace('A ', 'is a ')}`
+      const metaDescString = `${ownerInfo.nickname || ownerInfo.username} is airdropping ${detail.amount / 10000} ${tokenInfo.token.symbol}! ${metaTitle} ${metaDesc.replace('A ', 'is a ')}`
       console.log('Middleware::changeMetaInfo metaDescString:', metaDescString);
       metaDesc = metaDescString;
 
