@@ -38,11 +38,22 @@ export function ClaimLog({ claimLog, token }) {
 
   return (
     <div className="panel-block is-active">
-      <Avatar location={data.data.avatar} />
+      <div
+        onClick={() =>
+          (window.location = "https://matataki.io/user/" + claimLog.uid)
+        }
+      >
+        <Avatar location={data.data.avatar} />
+      </div>
       <div class="logs">
-        <span>
-          {data.data.nickname} Got {claimLog.amount / 10000}
-        </span>
+        <a
+          href={`https://matataki.io/user/${claimLog.uid}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {data.data.nickname}
+        </a>
+        <span> Got {claimLog.amount / 10000} </span>
         <span> {token.symbol}</span>
       </div>
     </div>
