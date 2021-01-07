@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Hero, Container, Heading } from "react-bulma-components";
 import { useStore } from "../store";
-import { BrowserRouter as Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const store = useStore();
