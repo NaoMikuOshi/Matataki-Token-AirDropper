@@ -3,31 +3,31 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
+    "@babel/runtime": "^7.12.5",
     "ahooks": "^2.0.1",
     "axios": "^0.19.2",
     "broadcast-channel": "^3.1.0",
     "clipboard": "^2.0.6",
+    "express": "^4.17.1",
     "formik": "^2.1.4",
-    "husky": "^4.2.5",
     "js-cookie": "^2.2.1",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5",
     "ramda": "^0.27.0",
     "react": "^16.13.1",
     "react-bulma-components": "3.3.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
     "undux": "^5.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:dev": "dotenv -e .env -e .env.development react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "npm-run-all --parallel build:dev server:dev",
+    "server": "npm-run-all --parallel build server:prod",
+    "server:dev": "cross-env NODE_ENV=development nodemon --inspect ./server/bootstrap.js",
+    "server:prod": "cross-env NODE_ENV=production nodemon --inspect ./server/bootstrap.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,6 +55,24 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^4.14.1"
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
+    "@babel/register": "^7.12.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "cross-env": "^7.0.2",
+    "dotenv-cli": "^4.0.0",
+    "dotenv-flow": "^3.2.0",
+    "husky": "^4.2.5",
+    "ignore-styles": "^5.0.1",
+    "lint-staged": "^10.2.11",
+    "node-sass": "^4.14.1",
+    "nodemon": "^2.0.6",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "react-scripts": "3.4.1"
   }
 }

@@ -37,12 +37,19 @@ function Loading() {
 
 export default function Claim() {
   const { cashtag } = useParams();
+  console.log("ClaimPage::Claim:useParams cashtag:", cashtag);
   async function getAirdrop() {
     const detail = await getDetailOfAirdrop(cashtag);
     const [ownerProfile, tokenProfile] = await Promise.all([
       getUserProfile(detail.owner),
       getTokenProfile(detail.token_id),
     ]);
+    console.log(
+      "ClaimPage::Claim:getAirdrop ownerProfile:",
+      ownerProfile,
+      "tokenProfile:",
+      tokenProfile
+    );
     const owner = ownerProfile.data;
     const token = tokenProfile.data.token;
     return { detail, owner, token };
