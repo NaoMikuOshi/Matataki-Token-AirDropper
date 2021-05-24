@@ -183,7 +183,7 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
             className="is-rounded is-primary"
             onClick={() => clickToClaim()}
             disabled={
-              isClaimed || isSendingClaim || isFinished || isCaptchaFilled
+              isClaimed || isSendingClaim || isFinished || !isCaptchaFilled
             }
           >
             {claimButtonText}
