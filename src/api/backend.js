@@ -112,8 +112,8 @@ export function getDetailOfAirdrop(cashtag) {
  * Claim Airdrop
  * @param {string} cashtag The $Cashtag of the airdrop
  */
-export function claimAirdrop(cashtag, memo = "") {
-  return client.post(`/airdrop/${cashtag}`, { memo });
+export function claimAirdrop(cashtag, memo = "", captcha = {}) {
+  return client.post(`/airdrop/${cashtag}`, { memo, captcha });
 }
 
 /**

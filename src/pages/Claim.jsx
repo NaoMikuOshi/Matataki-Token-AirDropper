@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import "./claim.scss";
 import { useStore } from "../store";
 import { useRequest } from "ahooks";
@@ -113,6 +114,7 @@ export default function Claim() {
 function ClaimControl({ cashtag, token, airdropDetail }) {
   let location = useLocation();
   const [isSendingClaim, updateLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState();
   const { data, loading } = useRequest(() => checkIsClaimed(cashtag));
   const [claimResult, updateClaimResult] = useState(null);
   const isClaimed = data && data.isClaimed;
@@ -133,8 +135,12 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
       : "Claim")();
 
   async function clickToClaim() {
+    if (!captchaToken) {
+      alert("Captcha error");
+      return;
+    }
     updateLoading(true);
-    const result = await claimAirdrop(cashtag);
+    const result = await claimAirdrop(cashtag, "", captchaToken);
     updateClaimResult(result);
     updateLoading(false);
   }
@@ -165,6 +171,10 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
     if (isLogined) {
       return (
         <div className="actions">
+          <HCaptcha
+            sitekey="02ab3af2-0d74-481b-81ff-1a9e1fea9296"
+            onVerify={(token, ekey) => setCaptchaToken({ token, ekey })}
+          />
           <Button
             className="is-rounded is-primary"
             onClick={() => clickToClaim()}
