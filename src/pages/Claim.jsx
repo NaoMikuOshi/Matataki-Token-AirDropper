@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import "./claim.scss";
 import { useStore } from "../store";
@@ -115,6 +115,7 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
   let location = useLocation();
   const [isSendingClaim, updateLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState();
+  const isCaptchaFilled = useMemo(() => !!captchaToken, [captchaToken]);
   const { data, loading } = useRequest(() => checkIsClaimed(cashtag));
   const [claimResult, updateClaimResult] = useState(null);
   const isClaimed = data && data.isClaimed;
@@ -132,6 +133,8 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
       ? "Claimed"
       : isSendingClaim
       ? "Sending request, hold on..."
+      : !isCaptchaFilled
+      ? "Please complete captcha above"
       : "Claim")();
 
   async function clickToClaim() {
@@ -174,11 +177,14 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
           <HCaptcha
             sitekey="02ab3af2-0d74-481b-81ff-1a9e1fea9296"
             onVerify={(token, ekey) => setCaptchaToken({ token, ekey })}
+            onExpire={() => setCaptchaToken(undefined)}
           />
           <Button
             className="is-rounded is-primary"
             onClick={() => clickToClaim()}
-            disabled={isClaimed || isSendingClaim || isFinished}
+            disabled={
+              isClaimed || isSendingClaim || isFinished || isCaptchaFilled
+            }
           >
             {claimButtonText}
           </Button>
