@@ -6,7 +6,7 @@
     "@babel/runtime": "^7.12.5",
     "@hcaptcha/react-hcaptcha": "^0.3.6",
     "ahooks": "^2.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "broadcast-channel": "^3.1.0",
     "clipboard": "^2.0.6",
     "express": "^4.17.1",
