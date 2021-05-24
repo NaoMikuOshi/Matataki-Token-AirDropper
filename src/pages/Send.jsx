@@ -81,6 +81,12 @@ export default function Send() {
     <div className="send">
       <Container>
         <h1 className="title">Send Airdrop</h1>
+        <Notification>
+          As part of reducing costs, we will limit the size of each airdrop to{" "}
+          <b>128</b>.
+          <br />
+          为了降低运营成本， 现在的空投规模将限制到最多 <b>128</b> 人 / 次.
+        </Notification>
         <Formik
           initialValues={formInitialValues}
           validate={formValidate}
