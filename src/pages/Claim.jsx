@@ -173,7 +173,7 @@ function ClaimControl({ cashtag, token, airdropDetail }) {
         <div className="actions">
           <HCaptcha
             sitekey="02ab3af2-0d74-481b-81ff-1a9e1fea9296"
-            onVerify={(token, ekey) => setCaptchaToken(token, ekey)}
+            onVerify={(token, ekey) => setCaptchaToken({ token, ekey })}
           />
           <Button
             className="is-rounded is-primary"
