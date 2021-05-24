@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "@hcaptcha/react-hcaptcha": "^0.3.6",
     "ahooks": "^2.0.1",
     "axios": "^0.19.2",
     "broadcast-channel": "^3.1.0",
