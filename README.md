@@ -8,7 +8,9 @@ yarn start
 ## Deploy
 
 ```bash
+# FE
 yarn build:dev
 
+# BE
 yarn server:dev
 ```
