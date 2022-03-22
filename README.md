@@ -9,4 +9,6 @@ yarn start
 
 ```bash
 yarn build:dev
+
+yarn server:dev
 ```
